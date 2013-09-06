@@ -2,6 +2,9 @@
 
 Utilities to manipulate PDB, BGF, (mol2, mae, etc.) files.
 
+- Django-queryset-like selection tools
+- Alignment and RMSD calculations/transformations
+
 ## Examples
 
 ### Selections and alignment
@@ -35,6 +38,17 @@ ray
 png example.png
 ```
 
-to get:
+to get (chain_a, green; chain_b, cyan; aligned_chain_b, magenta):
 
 ![pymol img](examples/example.png)
+
+## Dependencies
+
+* numpy==1.8.0.dev
+
+## TODO
+
+- [ ] Add tests
+- [ ] More atom record file types
+- [ ] More sophisticated alignment tools
+- [ ] Sequence alignments
