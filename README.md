@@ -48,7 +48,8 @@ to get (chain_a, green; chain_b, cyan; aligned_chain_b, magenta):
 
 ## TODO
 
-- [ ] Add tests
+- [x] Add tests
+- [ ] Improve test coverage
 - [ ] More atom record file types
 - [ ] More sophisticated alignment tools
 - [ ] Sequence alignments

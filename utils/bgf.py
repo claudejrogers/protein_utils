@@ -5,7 +5,7 @@ from copy import deepcopy
 from operator import attrgetter
 
 from .atom import Atom, AtomCollection
-from .pdb import PDBLine, PDBFile
+from .pdb import PDBAtom, PDBFile
 
 
 class BGFAtom(Atom):
@@ -199,7 +199,7 @@ class BGFFile(AtomCollection):
             bfactor = 0.00
             element = atom[0]
             charge = ''
-            p = PDBLine(record, natom, atom, altloc, res, chain, nres, icode,
+            p = PDBAtom(record, natom, atom, altloc, res, chain, nres, icode,
                         x, y, z, occupancy, bfactor, element, charge)
             pdb_atoms.append(p)
         return PDBFile(pdb_atoms)

@@ -4,7 +4,7 @@ from urllib2 import urlopen
 from .atom import Atom, AtomCollection
 
 
-class PDBLine(Atom):
+class PDBAtom(Atom):
     """PDB file class
     """
     def __init__(self, record, natom, atom, altloc, res, chain, nres, icode,
@@ -37,7 +37,7 @@ class PDBLine(Atom):
         record = line[RECORD].strip()
         natom = int(line[NATOM])
         atom = line[ATOM].strip()
-        altloc = line[ALTLOC].strip()
+        altloc = line[ALTLOC]
         res = line[RES].strip()
         chain = line[CHAIN]
         nres = int(line[NRES])
@@ -55,20 +55,15 @@ class PDBLine(Atom):
         return cls(record, natom, atom, altloc, res, chain, nres, icode, x, y, z,
                    occupancy, bfactor, element, charge)
 
-    # def add_connections(self, *connections):
-    #     self.conections.extend(connections)
-
     def add_connections_from_line(self, line):
         if not line.startswith('CONECT') and int(line[6:11]) != self.natom:
             return
+        line = line.strip()
         it = [iter(line[11:])] * 5
         self.connections.extend(int(''.join(num)) for num in zip(*it))
 
-    # def distance(self, other):
-    #     return np.linalg.norm(self.coord - other.coord)
-
     def writeline(self):
-        if self.record == 'ATOM' and not self.atom.startswith('H'):
+        if not self.atom.startswith('H'):
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom
@@ -103,7 +98,7 @@ def _read_file_iterator(iterable):
     atoms = {}
     for line in iterable:
         if line.startswith(('ATOM', 'HETATM')):
-            p = PDBLine.from_line(line)
+            p = PDBAtom.from_line(line)
             atoms[p.natom] = p
         elif line.startswith('CONECT'):
             natom = int(line[6:11])
