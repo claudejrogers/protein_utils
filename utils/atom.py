@@ -1,5 +1,6 @@
 import operator
 from copy import deepcopy
+from itertools import product
 import numpy as np
 
 from .kabsch import aligned_rmsd, align
@@ -166,6 +167,7 @@ class AtomCollection(object):
         """Return a new object containing HETATM records.
         """
         atoms = self._select_record('HETATM')
+        atoms = [a for a in atoms if a.res != 'HOH']  # no water
         return self._init_with_atoms(atoms)
 
     def backbone(self):
@@ -231,6 +233,15 @@ class AtomCollection(object):
         if atoms:
             return self._init_with_atoms(atoms)
         return None
+
+    def within(self, distance, other):
+        """Get atoms in this instance within some distance of other.
+        """
+        atoms = {s for s, o in product(
+            self.atoms, other.atoms
+        ) if s.distance(o) < distance}
+        atoms = sorted(atoms, key=operator.attrgetter('natom'))
+        return self._init_with_atoms(atoms)
 
     def renumber_residues(self, start=1):
         """Renumber residues beginning with start.

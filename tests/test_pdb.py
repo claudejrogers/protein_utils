@@ -157,3 +157,15 @@ class TestPDBFileBitwiseOperations(unittest.TestCase):
         chain_bc = self.pdb.select(chain__gt='A')
         chain_a ^= self.pdb
         self.assertEqual(chain_a, chain_bc)
+
+
+class TestWithinMethod(unittest.TestCase):
+
+    def setUp(self):
+        self.pdb = PDBFile.from_file('tests/resources/1hpv.pdb')
+        self.lig = self.pdb.ligand()
+        self.prot = self.pdb.protein()
+
+    def test_distance_method(self):
+        binding_site = self.prot.within(5.0, self.lig)
+        self.assertEqual(len(binding_site), 100)

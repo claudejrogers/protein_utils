@@ -7,7 +7,7 @@ Utilities to manipulate PDB, BGF, (mol2, mae, etc.) files.
 
 ## Examples
 
-### Selections and alignment
+### 1.0 Selections and Alignment
 
 ```python
 >>> from utils.pdb import PDBFile
@@ -42,13 +42,45 @@ to get (chain_a, green; chain_b, cyan; aligned_chain_b, magenta):
 
 ![pymol img](examples/example.png)
 
+### 1.1 Select By Distance and Chaining
+
+```python
+>>> from utils.pdb import PDBFile
+>>> pdb.fetch('1HPV')
+# Select ligand
+>>> ligand = pdb.ligand()
+# select protein atoms with 5 Angstroms of the ligand
+>>> prot = pdn.protein().within(5.0, ligand)
+>>> ligand.write_pdb('ligand.pdb')
+>>> prot.write_pdb('prot.pdb')
+```
+
+Again, visualize:
+
+```
+# example2.pml
+load ligand.pdb
+load prot.pdb
+
+hide everything
+
+show lines, prot
+show sticks, ligand
+
+zoom
+ray
+png example.png
+```
+
+![pymol img 2](examples/example2.png)
+
 ## Dependencies
 
 * numpy==1.8.0.dev
 
 ## TODO
 
-- [x] Add tests
+- [x] ~~Add tests~~
 - [ ] Improve test coverage
 - [ ] More atom record file types
 - [ ] More sophisticated alignment tools
