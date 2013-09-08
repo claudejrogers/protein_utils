@@ -1,6 +1,6 @@
 import unittest
 
-from utils.pdb import PDBAtom, PDBFile
+from protutils.pdb import PDBAtom, PDBFile
 
 
 class TestPDBAtomMethods(unittest.TestCase):

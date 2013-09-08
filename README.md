@@ -18,7 +18,7 @@ Requires numpy.
 Download pdbs, quickly select a subsection of atoms, then align the structures
 
 ```python
->>> from utils.pdb import PDBFile
+>>> from protutils.pdb import PDBFile
 
 # Download 4K5Y.pdb from RCSB Protein Data Bank
 >>> pdb = PDBFile.fetch('4K5Y')
@@ -55,7 +55,7 @@ Better yet, use the [cealign](http://www.pymolwiki.org/index.php/Cealign)
 algorithm to align molecules with different numbers of atoms.
 
 ```python
->>> from utils.pdb import PDBFile
+>>> from protutils.pdb import PDBFile
 >>> pdb = PDBFile.fetch('4K5Y')
 >>> chain_a = pdb.select(chain='A')  # equivalent to pdb.select(chain__eq='A')
 >>> chain_b = pdb.select(chain='B')
@@ -63,7 +63,7 @@ algorithm to align molecules with different numbers of atoms.
 >>> False
 # the align method would fail for these selections
 >>> aligned_chain_b = chain_b.cealign(chain_a)
-RMSD = 0.874903919378  # RMSD of C&alpha;'s
+RMSD = 0.874903919378  # RMSD of alpha carbons
 >>> chain_a.write_pdb('chain_a.pdb')
 >>> chain_b.write_pdb('chain_b.pdb')
 >>> aligned_chain_b.write_pdb('aligned_chain_b.pdb')
@@ -81,7 +81,7 @@ Visualizing as before:
 # Select ligand
 >>> ligand = pdb.ligand()
 # select protein atoms with 5 Angstroms of the ligand
->>> prot = pdn.protein().within(5.0, ligand)
+>>> prot = pdb.protein().within(5.0, ligand)
 >>> ligand.write_pdb('ligand.pdb')
 >>> prot.write_pdb('prot.pdb')
 ```

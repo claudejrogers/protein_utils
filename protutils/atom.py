@@ -1,9 +1,9 @@
 import operator
 from copy import deepcopy
-from itertools import product
+from itertools import groupby, product
 import numpy as np
 
-from .kabsch import aligned_rmsd, align, align_substructure
+from .cealign.kabsch import aligned_rmsd, align, align_substructure
 from .cealign.cealign import distance_matrix, similarity_matrix, find_path
 
 
@@ -29,7 +29,73 @@ class Atom(object):
         self.connections.extend(connections)
 
     def distance(self, other):
+        """Compute the distance between to Atoms
+        """
         return np.linalg.norm(self.coord - other.coord)
+
+    @staticmethod
+    def dist(atm1, atm2):
+        return np.linalg.norm(atm1.coord - atm2.coord)
+
+    @staticmethod
+    def dot(atm1, atm2):
+        """Find dot product of two sets of Atom coordinates
+        """
+        return np.dot(atm1.coord, atm2.coord)
+
+    def cross(self, other):
+        """Find cross product of two sets of Atom coordinates
+        """
+        return np.cross(self.coord, other.coord)
+
+    @staticmethod
+    def nomalize(atom):
+        """Normalize Atom coordinates
+        """
+        return _normalize(atom.coord)
+
+    @staticmethod
+    def angle(atm1, atm2, atm3):
+        """Find angle between this atom (vertex) and two others
+        """
+        c1 = atm3.coord - atm2.coord
+        c2 = atm1.coord - atm2.coord
+        norm1 = _normalize(c1)
+        norm2 = _normalize(c2)
+        dotted = np.dot(norm1, norm2)
+        if dotted > 1.0:
+            dotted = 1.0
+        rad = abs(np.arccos(dotted))
+        angle = rad * 180.0 / np.pi
+        if angle > 180.0:
+            angle = 360.0 - angle
+        return angle
+
+    @staticmethod
+    def dihedral(atm1, atm2, atm3, atm4):
+        """Calculate dihedral angle
+        """
+        delta43 = atm4.coord - atm3.coord
+        delta32 = atm3.coord - atm2.coord
+        delta12 = atm1.coord - atm2.coord
+
+        A = np.cross(delta12, delta32)
+        normA = _normalize(A)
+        B = np.cross(delta43, delta32)
+        normB = _normalize(B)
+
+        scal = np.dot(normA, normB)
+        if abs(scal + 1.0) < 1.0e-7:
+            value = 180.0
+        elif abs(scal - 1.0) < 1.0e-7:
+            value = 0.0
+        else:
+            value = 57.2958 * np.arccos(scal)
+
+        chiral = np.dot(np.cross(normA, normB), delta32)
+        if chiral < 0:
+            value *= -1.0
+        return value
 
     def __repr__(self):
         if self.record == 'ATOM' and not self.atom.startswith('H'):
@@ -158,6 +224,14 @@ class AtomCollection(object):
     def _select_record(self, record):
         return [a for a in self.atoms if a.record == record]
 
+    def groupby_residue(self):
+        """Return dict of residue records grouped by 'nres_chain' keys
+        """
+        g = groupby(self.atoms, operator.attrgetter('nres', 'chain'))
+        return {
+            "{0}_{1}".format(*key): self._init_with_atoms(it) for key, it in g
+        }
+
     def protein(self):
         """Return a new object containing ATOM records.
         """
@@ -198,7 +272,15 @@ class AtomCollection(object):
     def resi(self):
         """Return a list of residue numbers.
         """
-        return self._attr_set('nres')
+        g = groupby(self.atoms, operator.attrgetter('nres', 'chain'))
+        return ["{0}_{1}".format(*key) for key, it in g]
+
+    @property
+    def residues(self):
+        """Returns a list of residues.
+        """
+        g = groupby(self.atoms, operator.attrgetter('nres', 'chain', 'res'))
+        return [key[2] for key, it in g]
 
     def select(self, **kwargs):
         """Select atoms based on logical criteria
@@ -236,7 +318,8 @@ class AtomCollection(object):
         return None
 
     def within(self, distance, other):
-        """Get atoms in this instance within some distance of other.
+        """Get atoms in this instance within some distance of atoms in
+        other instance.
         """
         atoms = {s for s, o in product(
             self.atoms, other.atoms
@@ -366,3 +449,14 @@ class AtomCollection(object):
             at.coord = new_coord
             at.x, at.y, at.z = new_coord
         return self._init_with_atoms(atoms, deepcopy_=False)
+
+
+def _normalize(coords):
+    """Normalize coordinates
+
+    coords must be a numpy array
+    """
+    dist = np.linalg.norm(coords)
+    if dist > 1.0e-7:
+        return coords / dist
+    return coords
