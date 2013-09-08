@@ -51,8 +51,8 @@ to get (chain_a, green; chain_b, cyan; aligned_chain_b, magenta):
 
 ![pymol img](examples/example.png)
 
-Better yet, use the cealign algorithm () to align molecules with different
-numbers of atoms.
+Better yet, use the [cealign](http://www.pymolwiki.org/index.php/Cealign)
+algorithm to align molecules with different numbers of atoms.
 
 ```python
 >>> from utils.pdb import PDBFile
@@ -71,7 +71,7 @@ RMSD = 0.874903919378  # RMSD of C&alpha;'s
 
 Visualizing as before:
 
-![pymol img](example/example1.png)
+![pymol img](examples/example1.png)
 
 ### 1.1 Select By Distance and Chaining
 
