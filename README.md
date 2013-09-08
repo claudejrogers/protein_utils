@@ -5,9 +5,17 @@ Utilities to manipulate PDB, BGF, (mol2, mae, etc.) files.
 - Django-queryset-like selection tools
 - Alignment and RMSD calculations/transformations
 
+## Build
+
+Requires numpy.
+
+    python setup.py build_ext --inplace
+
 ## Examples
 
 ### 1.0 Selections and Alignment
+
+Download pdbs, quickly select a subsection of atoms, then align the structures
 
 ```python
 >>> from utils.pdb import PDBFile
@@ -17,11 +25,12 @@ Utilities to manipulate PDB, BGF, (mol2, mae, etc.) files.
 # Select residues less than 263 on chain A
 >>> chain_a = pdb.select(chain__eq='A', nres__lt=263)
 >>> chain_b = pdb.select(chain__eq='B', nres__lt=263)
+# Align selection with the same number of atoms
 >>> aligned_chain_b = chain_b.align(chain_a)
 RMSD = 0.983960869568
 >>> chain_a.write_pdb('chain_a.pdb')
 >>> chain_b.write_pdb('chain_b.pdb')
->>> aligned_chain_b = chain_b.write_pdb('aligned_chain_b.pdb')
+>>> aligned_chain_b.write_pdb('aligned_chain_b.pdb')
 ```
 
 Now, we can visualize our selections:
@@ -41,6 +50,28 @@ png example.png
 to get (chain_a, green; chain_b, cyan; aligned_chain_b, magenta):
 
 ![pymol img](examples/example.png)
+
+Better yet, use the cealign algorithm () to align molecules with different
+numbers of atoms.
+
+```python
+>>> from utils.pdb import PDBFile
+>>> pdb = PDBFile.fetch('4K5Y')
+>>> chain_a = pdb.select(chain='A')  # equivalent to pdb.select(chain__eq='A')
+>>> chain_b = pdb.select(chain='B')
+>>> len(chain_a) == len(chain_b)
+>>> False
+# the align method would fail for these selections
+>>> aligned_chain_b = chain_b.cealign(chain_a)
+RMSD = 0.874903919378  # RMSD of C&alpha;'s
+>>> chain_a.write_pdb('chain_a.pdb')
+>>> chain_b.write_pdb('chain_b.pdb')
+>>> aligned_chain_b.write_pdb('aligned_chain_b.pdb')
+```
+
+Visualizing as before:
+
+![pymol img](example/example1.png)
 
 ### 1.1 Select By Distance and Chaining
 
@@ -83,5 +114,5 @@ png example.png
 - [x] ~~Add tests~~
 - [ ] Improve test coverage
 - [ ] More atom record file types
-- [ ] More sophisticated alignment tools
+- [x] ~~More sophisticated alignment tools~~
 - [ ] Sequence alignments

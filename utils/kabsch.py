@@ -9,9 +9,19 @@ def _get_centered_coordinates(coord_array):
     return (coord_array - COM1, COM1)
 
 
-def _kabsch(mol1, mol2, rmsd=False):
+def _kabsch(mol1, mol2, mode='full'):
     """
     Align other molecule to the top. Returns new coordinates for other.
+
+    parameters
+    ----------
+
+    mol1, mol2  :: N x 3 numpy arrays containing atom coordinates
+    return_type :: Specify what to return. Options:
+                        'full'    - aligned coordinates for mol2
+                        'rmsd'    - RMSD of alignment
+                        'partial' - return translation/rotation matrix
+                                    and coordinate centers
     """
     L = len(mol1)
 
@@ -35,12 +45,15 @@ def _kabsch(mol1, mol2, rmsd=False):
 
     RMSD = E0 - (2.0 * sum(S))
     RMSD = np.sqrt(abs(RMSD / L))
-    if rmsd:
+    if mode == 'rmsd':
         return RMSD
 
     print "RMSD =", RMSD
 
     U = np.dot(V, Wt)
+
+    if mode == 'partial':
+        return U, COM1, COM2
 
     # rotate and translate the molecule
     mol2 = np.dot((other), U)
@@ -48,8 +61,12 @@ def _kabsch(mol1, mol2, rmsd=False):
 
 
 def aligned_rmsd(mol1, mol2):
-    return _kabsch(mol1, mol2, rmsd=True)
+    return _kabsch(mol1, mol2, mode='rmsd')
 
 
 def align(mol1, mol2):
-    return _kabsch(mol1, mol2, rmsd=False)
+    return _kabsch(mol1, mol2, mode='full')
+
+
+def align_substructure(mol1, mol2):
+    return _kabsch(mol1, mol2, mode='partial')

@@ -3,7 +3,8 @@ from copy import deepcopy
 from itertools import product
 import numpy as np
 
-from .kabsch import aligned_rmsd, align
+from .kabsch import aligned_rmsd, align, align_substructure
+from .cealign.cealign import distance_matrix, similarity_matrix, find_path
 
 
 class Atom(object):
@@ -321,6 +322,45 @@ class AtomCollection(object):
         mol1 = other.matrix
         mol2 = self.matrix
         new_coords = align(mol1, mol2)
+        atoms = [deepcopy(a) for a in self.atoms]
+        for at, new_coord in zip(atoms, new_coords):
+            at.coord = new_coord
+            at.x, at.y, at.z = new_coord
+        return self._init_with_atoms(atoms, deepcopy_=False)
+
+    def cealign(self, other, alphas=True):
+        """Align using the cealign algorithm from pymol
+
+        By default, aligns CA carbons only. Set alphas=False to
+        align the full selection.
+        """
+        if alphas:
+            A = other.select(atom='CA').matrix
+            B = self.select(atom='CA').matrix
+        else:
+            A = other.matrix
+            B = self.matrix
+        dA = distance_matrix(A)
+        dB = distance_matrix(B)
+        S = similarity_matrix(dA, dB)
+        paths = find_path(S, dA, dB)
+        scores = np.zeros(paths.shape[0])
+        for i, p in enumerate(paths):
+            m1 = A[p[:, 0]]
+            m2 = B[p[:, 1]]
+            scores[i] = aligned_rmsd(m1, m2)
+        best_path = scores.argmin()
+
+        A_MASK = paths[best_path, :, 0]
+        B_MASK = paths[best_path, :, 1]
+
+        MOL1 = A[A_MASK]
+        MOL2 = B[B_MASK]
+
+        U, COM1, COM2 = align_substructure(MOL1, MOL2)
+        new_coords = np.dot(self.matrix - COM2, U) + COM1
+
+        # Make new object
         atoms = [deepcopy(a) for a in self.atoms]
         for at, new_coord in zip(atoms, new_coords):
             at.coord = new_coord
