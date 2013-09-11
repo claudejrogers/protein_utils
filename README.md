@@ -116,7 +116,7 @@ png example.png
 
 ![Ramachandran plot](examples/example3.png)
 
-### 1.3 Orienting protein along its principle axis
+### 1.3 Orient protein along its principle axis
 
 ```python
 >>> from protutils.pdb import PDBFile
