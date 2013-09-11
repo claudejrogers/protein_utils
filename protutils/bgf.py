@@ -1,6 +1,3 @@
-"""
-mod string
-"""
 from copy import deepcopy
 from operator import attrgetter
 

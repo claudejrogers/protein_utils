@@ -1,6 +1,8 @@
+from itertools import groupby
 from operator import attrgetter
 from urllib2 import urlopen
 
+from .residue import Residue, Residues
 from .atom import Atom, AtomCollection
 
 
@@ -37,11 +39,11 @@ class PDBAtom(Atom):
         record = line[RECORD].strip()
         natom = int(line[NATOM])
         atom = line[ATOM].strip()
-        altloc = line[ALTLOC]
+        altloc = line[ALTLOC].strip()
         res = line[RES].strip()
         chain = line[CHAIN]
         nres = int(line[NRES])
-        icode = line[ICODE]
+        icode = line[ICODE].strip()
         x = float(line[X])
         y = float(line[Y])
         z = float(line[Z])
@@ -88,10 +90,55 @@ class PDBAtom(Atom):
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom
-        return "<PDB: {0:6s}{1:5d} {2:4s}{3:1s}{4:3s} {5:1s}{6:4d} ...>".format(
+        return "<PDB: {0:6s}{1:5d} {2:4s}{3:1s}{4:3s} {5:1s}{6:4d}{7} ...>".format(
             self.record, self.natom, atom, self.altloc, self.res, self.chain,
-            self.nres
+            self.nres, self.icode
         )
+
+
+class PDBResidue(Residue):
+
+    def __init__(self, res, nres, chain, icode, atoms):
+        self.icode = icode.strip() or ''
+        super(self.__class__, self).__init__(res, nres, chain, atoms)
+
+    @classmethod
+    def from_atoms(cls, atoms):
+        g = groupby(atoms, attrgetter('nres', 'chain', 'icode', 'res'))
+        resi = [(key, it) for key, it in g]
+        if len(resi) != 1:
+            raise ValueError(
+                '{0} can only contain one residue.'.format(
+                    cls.__name
+                )
+            )
+        (nres, chain, icode, res), it = resi[0]
+        return cls(res, nres, chain, icode, list(it))
+
+    def get_next(self):
+        """Returns key for 'next' residue
+        """
+        return '{0}{1}_{2}'.format(self.nres + 1, self.icode, self.chain)
+
+    def get_prev(self):
+        """Returns key for 'previous' residue
+        """
+        return '{0}{1}_{2}'.format(self.nres - 1, self.icode, self.chain)
+
+
+class PDBResidues(Residues):
+
+    def __init__(self, atoms):
+        g = groupby(atoms, attrgetter('nres', 'chain', 'icode', 'res'))
+        self._dict = {
+            '{0}{1}_{2}'.format(nres, icode.strip(), chain): PDBResidue(
+                res, nres, chain, icode, list(it)
+            ) for (nres, chain, icode, res), it in g
+        }
+        self._list = [v for v in sorted(
+            self._dict.itervalues(),
+            key=attrgetter('nres', 'chain', 'icode')
+        )]
 
 
 def _read_file_iterator(iterable):
@@ -129,6 +176,10 @@ class PDBFile(AtomCollection):
         atoms = _read_file_iterator(f)
         f.close()
         return cls(atoms)
+
+    def ramachandran_plot(self):
+        residues = PDBResidues(self.atoms)
+        residues.ramachandran_plot()
 
     def write_pdb(self, filename):
         atoms = []

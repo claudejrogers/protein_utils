@@ -1,6 +1,6 @@
 # Protein Utilities
 
-Utilities to manipulate PDB, BGF, (mol2, mae, etc.) files.
+Utilities to manipulate PDB, PQR, BGF, (mol2, mae, etc.) files.
 
 - Django-queryset-like selection tools
 - Alignment and RMSD calculations/transformations
@@ -76,7 +76,7 @@ Visualizing as before:
 ### 1.1 Select By Distance and Chaining
 
 ```python
->>> from utils.pdb import PDBFile
+>>> from protutils.pdb import PDBFile
 >>> pdb.fetch('1HPV')
 # Select ligand
 >>> ligand = pdb.ligand()
@@ -105,9 +105,21 @@ png example.png
 
 ![pymol img 2](examples/example2.png)
 
+### 1.2 Structure analysis
+
+```python
+>>> from protutils.pdb import PDBFile
+>>> pdb.fetch('4K5Y')
+>>> protein = pdb.protein()  # remove HETATM records
+>>> protein.ramachandran_plot()
+```
+
+![Ramachandran plot](examples/example3.png)
+
 ## Dependencies
 
-* numpy==1.8.0.dev
+* numpy
+* matplotlib
 
 ## TODO
 

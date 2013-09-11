@@ -3,6 +3,7 @@ from copy import deepcopy
 from itertools import groupby, product
 import numpy as np
 
+import residue
 from .cealign.kabsch import aligned_rmsd, align, align_substructure
 from .cealign.cealign import distance_matrix, similarity_matrix, find_path
 
@@ -206,6 +207,10 @@ class AtomCollection(object):
         self.matrix = np.array([atom.coord for atom in self.atoms])
         return self
 
+    def __repr__(self):
+        return '<{0}: ({1} atoms)>'.format(self.__class__.__name__,
+                                           len(self.atoms))
+
     def _init_with_atoms(self, atoms, deepcopy_=True):
         if deepcopy_:
             atoms = [deepcopy(a) for a in atoms]
@@ -282,20 +287,11 @@ class AtomCollection(object):
         g = groupby(self.atoms, operator.attrgetter('nres', 'chain', 'res'))
         return [key[2] for key, it in g]
 
-    def select(self, **kwargs):
-        """Select atoms based on logical criteria
+    def ramachandran_plot(self):
+        residues = residue.Residues(self.atoms)
+        residues.ramachandran_plot()
 
-        Examples:
-
-        >>> prot = AtomCollection(atoms)
-        >>> chain_a = prot.select(chain__eq='A')
-        >>> other_chains = prot.select(chain__ne='A')
-        >>> residues_1_to_250 = prot.select(nres__le=250)
-        >>> hydrogens = prot.select(atom__startswith='H')
-        >>> res356_A = prot.select(chain='A', nres=356)  # default is 'eq'
-        >>> selection = prot.select(nres__gt=200, nres__lt=245).sidechains()
-
-        """
+    def _select_or_exclude(self, metric, **kwargs):
         atoms = self.atoms[::]
         for key, value in kwargs.iteritems():
             try:
@@ -312,10 +308,34 @@ class AtomCollection(object):
                 f = lambda obj, value: getattr(obj, func)(value)
             else:
                 raise AttributeError("Can't apply {0}".format(func))
-            atoms = [a for a in atoms if f(getattr(a, attr), value)]
+            if metric == 'select':
+                atoms = [a for a in atoms if f(getattr(a, attr), value)]
+            elif metric == 'exclude':
+                atoms = [a for a in atoms if not f(getattr(a, attr), value)]
+            else:
+                raise ValueError("Unknown metric {0}.".format(metric))
         if atoms:
             return self._init_with_atoms(atoms)
         return None
+
+    def select(self, **kwargs):
+        """Select atoms based on logical criteria
+
+        Examples:
+
+        >>> prot = AtomCollection(atoms)
+        >>> chain_a = prot.select(chain__eq='A')
+        >>> other_chains = prot.select(chain__ne='A')
+        >>> residues_1_to_250 = prot.select(nres__le=250)
+        >>> hydrogens = prot.select(atom__startswith='H')
+        >>> res356_A = prot.select(chain='A', nres=356)  # default is 'eq'
+        >>> selection = prot.select(nres__gt=200, nres__lt=245).sidechains()
+
+        """
+        return self._select_or_exclude('select', **kwargs)
+
+    def exclude(self, **kwargs):
+        return self._select_or_exclude('exclude', **kwargs)
 
     def within(self, distance, other):
         """Get atoms in this instance within some distance of atoms in
@@ -364,12 +384,12 @@ class AtomCollection(object):
         Missing residues are filled in with -'s
         """
         key = {
-            'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'CYS': 'C',
-            'CYX': 'C', 'GLU': 'E', 'GLN': 'Q', 'GLY': 'G', 'HID': 'H',
-            'HIE': 'H', 'HIP': 'H', 'HIS': 'H', 'HSE': 'H', 'HSP': 'H',
-            'ILE': 'I', 'LEU': 'L', 'LYS': 'K', 'MET': 'M', 'PHE': 'F',
-            'PRO': 'P', 'SER': 'S', 'THR': 'T', 'TRP': 'W', 'TYR': 'Y',
-            'VAL': 'V'
+            'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'APP': 'D',
+            'CYS': 'C', 'CYX': 'C', 'GLU': 'E', 'GLP': 'E', 'GLN': 'Q',
+            'GLY': 'G', 'HID': 'H', 'HIE': 'H', 'HIP': 'H', 'HIS': 'H',
+            'HSE': 'H', 'HSP': 'H', 'ILE': 'I', 'LEU': 'L', 'LYS': 'K',
+            'MET': 'M', 'PHE': 'F', 'PRO': 'P', 'SER': 'S', 'THR': 'T',
+            'TRP': 'W', 'TYR': 'Y', 'VAL': 'V'
         }
         chain_seq = []
         for chain in self.chains:
@@ -398,6 +418,15 @@ class AtomCollection(object):
         mol2 = self.matrix
         return aligned_rmsd(mol1, mol2)
 
+    def new_coordinates(self, matrix):
+        """Create new object with new coordinates
+        """
+        atoms = [deepcopy(a) for a in self.atoms]
+        for at, new_coord in zip(atoms, matrix):
+            at.coord = new_coord
+            at.x, at.y, at.z = new_coord
+        return self._init_with_atoms(atoms, deepcopy_=False)
+
     def align(self, other):
         """Align this object to another and return a new object with the
         aligned coordinates.
@@ -405,11 +434,7 @@ class AtomCollection(object):
         mol1 = other.matrix
         mol2 = self.matrix
         new_coords = align(mol1, mol2)
-        atoms = [deepcopy(a) for a in self.atoms]
-        for at, new_coord in zip(atoms, new_coords):
-            at.coord = new_coord
-            at.x, at.y, at.z = new_coord
-        return self._init_with_atoms(atoms, deepcopy_=False)
+        return self.new_coordinates(new_coords)
 
     def cealign(self, other, alphas=True):
         """Align using the cealign algorithm from pymol
@@ -444,11 +469,7 @@ class AtomCollection(object):
         new_coords = np.dot(self.matrix - COM2, U) + COM1
 
         # Make new object
-        atoms = [deepcopy(a) for a in self.atoms]
-        for at, new_coord in zip(atoms, new_coords):
-            at.coord = new_coord
-            at.x, at.y, at.z = new_coord
-        return self._init_with_atoms(atoms, deepcopy_=False)
+        return self.new_coordinates(new_coords)
 
 
 def _normalize(coords):

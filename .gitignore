@@ -2,6 +2,7 @@
 */*.pyc
 *.swp
 *.swo
+*.swn
 *.DS_Store
 build/*
 *.so
