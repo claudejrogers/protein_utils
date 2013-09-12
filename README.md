@@ -7,7 +7,7 @@ Utilities to manipulate PDB, PQR, BGF, (mol2, mae, etc.) files.
 
 ## Build
 
-Requires numpy.
+Requires numpy and metplotlib.
 
     python setup.py build_ext --inplace
 
@@ -25,7 +25,7 @@ Download pdbs, quickly select a subsection of atoms, then align the structures
 # Select residues less than 263 on chain A
 >>> chain_a = pdb.select(chain__eq='A', nres__lt=263)
 >>> chain_b = pdb.select(chain__eq='B', nres__lt=263)
-# Align selection with the same number of atoms
+# Align selection with another selection that contains the same number of atoms
 >>> aligned_chain_b = chain_b.align(chain_a)
 RMSD = 0.983960869568
 >>> chain_a.write_pdb('chain_a.pdb')
@@ -115,6 +115,21 @@ png example.png
 ```
 
 ![Ramachandran plot](examples/example3.png)
+
+### 1.3 Orient protein along its principle axis
+
+```python
+>>> from protutils.pdb import PDBFile
+>>> pdb = PDBFile.fetch('4K5Y')
+>>> protein = pdb.select(chain='A', nres__lt=1000).protein()
+>>> orient = protein.orient()
+>>> protein.write_pdb('4K5YA.pdb')
+>>> orient.write_pdb('4K5YA_0.pdb')
+```
+
+Visualize transformed structure in pymol with axes marked by rgb lines.
+
+![Oriented protein](examples/example4.png)
 
 ## Dependencies
 

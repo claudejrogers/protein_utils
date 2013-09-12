@@ -427,6 +427,37 @@ class AtomCollection(object):
             at.x, at.y, at.z = new_coord
         return self._init_with_atoms(atoms, deepcopy_=False)
 
+    def orient(self):
+        """Orient the protein to be centered at the origin with the
+        principle axes aligned properly.
+        """
+        X = self.matrix
+        COM = X.mean(axis=0)
+        M = X - COM
+        V, s, W = np.linalg.svd(M)
+        xidx = s.argmax()
+        zidx = s.argmin()
+        yidx = list(set(range(3)) ^ set([xidx, zidx]))[0]
+
+        A = np.zeros((3, 3))
+        A[:, xidx] = [1.0, 0.0, 0.0]
+        A[:, yidx] = [0.0, 1.0, 0.0]
+        A[:, zidx] = [0.0, 0.0, 1.0]
+
+        V, S, Wt = np.linalg.svd(np.dot(W.T, A))
+
+        reflect = np.linalg.det(V) * np.linalg.det(Wt)
+
+        if np.isclose(reflect, -1.0):
+            S[-1] = -S[-1]
+            V[:, -1] = -V[:, -1]
+
+        U = np.dot(V, Wt)
+
+        new_coords = np.dot(M, U)
+
+        return self.new_coordinates(new_coords)
+
     def align(self, other):
         """Align this object to another and return a new object with the
         aligned coordinates.
