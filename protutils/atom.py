@@ -441,14 +441,14 @@ class AtomCollection(object):
 
         A = np.zeros((3, 3))
         A[:, xidx] = [1.0, 0.0, 0.0]
-        A[:, yidx] = [0.0, 010, 0.0]
+        A[:, yidx] = [0.0, 1.0, 0.0]
         A[:, zidx] = [0.0, 0.0, 1.0]
 
         V, S, Wt = np.linalg.svd(np.dot(W.T, A))
 
         reflect = float(np.linalg.det(V) * np.linalg.det(Wt))
 
-        if reflect == -1:
+        if np.isclose(reflect, -1.0):
             S[-1] = -S[-1]
             V[:, -1] = -V[:, -1]
 
