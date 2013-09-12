@@ -446,7 +446,7 @@ class AtomCollection(object):
 
         V, S, Wt = np.linalg.svd(np.dot(W.T, A))
 
-        reflect = float(np.linalg.det(V) * np.linalg.det(Wt))
+        reflect = np.linalg.det(V) * np.linalg.det(Wt)
 
         if np.isclose(reflect, -1.0):
             S[-1] = -S[-1]

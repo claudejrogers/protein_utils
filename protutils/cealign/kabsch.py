@@ -37,7 +37,7 @@ def _kabsch(mol1, mol2, mode='full'):
     # Kabsch
     V, S, Wt = np.linalg.svd(np.dot(other.T, top))
 
-    reflect = float(np.linalg.det(V) * np.linalg.det(Wt))
+    reflect = np.linalg.det(V) * np.linalg.det(Wt)
 
     if np.isclose(reflect, -1.0):
         S[-1] = -S[-1]
