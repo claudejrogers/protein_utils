@@ -1,3 +1,7 @@
+"""
+Taken from ProDy
+(http://www.csb.pitt.edu/prody/_modules/prody/proteins/blastpdb.html)
+"""
 import re
 import time
 import urllib2
@@ -74,3 +78,63 @@ def xml_dict(root, tag_prefix):
             else:
                 d[key] = element
     return d
+
+
+class BLASTPDBRecord(object):
+
+    def __init__(self, sequence, nhits=250, expect=1e-10, timeout=60, pause=1):
+        self.qseq = sequence
+        root = blast_pdb(sequence, nhits, expect, timeout, pause)
+        root = xml_dict(root, 'BlastOutput_')
+        self.query_id = root['query-ID']
+        if not len(sequence) == int(root['query-len']):
+            raise ValueError('Sequence length does not match query length')
+        self.param = xml_dict(root['param'][0], 'Parameters_')
+
+        hits = []
+        for elem in root['iterations']:
+            for child in xml_dict(elem, 'Iteration_')['hits']:
+                hit = xml_dict(child, 'Hit_')
+                data = xml_dict(hit['hsps'][0], 'Hsp_')
+                for key in ['align-len', 'gaps', 'hit-frame', 'hit-from',
+                            'hit-to', 'identity', 'positive', 'query-frame',
+                            'query-from', 'query-to']:
+                    data[key] = int(data[key])
+                for key in ['evalue', 'bit-score', 'score']:
+                    data[key] = float(data[key])
+                p_identity = (data['identity'] /
+                              float(data['query-to'] - data['query-from'] + 1)
+                              * 100)
+                p_overlap = ((data['align-len'] - data['gaps']) /
+                             float(len(sequence)) * 100)
+                data['percent_identity'] = p_identity
+                data['percent_overlap'] = p_overlap
+                __, gi, __, pdb, chain = hit['id'].split('|')
+                data['gi'] = gi
+                data['pdb'] = pdb
+                data['chain'] = chain
+                data['def'] = hit['def']
+                hits.append(data)
+        hits.sort(key=lambda x: x['percent_identity'], reverse=True)
+        self.hits = hits
+
+    def get_hits(self, percent_identity=90.0, percent_overlap=70.0):
+        hits = {}
+        for hit in self.hits:
+            if hit['percent_identity'] < percent_identity:
+                break
+            if hit['percent_overlap'] < percent_overlap:
+                continue
+            key = '{pdb}_{chain}'.format(**hit)
+            hits[key] = hit
+        return hits
+
+    def get_best(self):
+        return self.hits[0]
+
+    def ranking(self):
+        return {
+            '{pdb}_{chain}'.format(**hit): hit[
+                'percent_identity'
+            ] for hit in self.hits
+        }
