@@ -95,10 +95,34 @@ class Residues(object):
         return N, CA, C, N_
 
     def phi(self, residue):
+        """Get phi angle for indicated residue
+
+        Parameters
+        ----------
+        residue : string
+            Key for residue in the form \{NRES\}_\{CHAIN\}
+
+        Returns
+        -------
+        result : float
+            The phi dihedral angle, in degrees, for this residue
+        """
         atoms = self._get_phi_atoms(residue)
         return atom.Atom.dihedral(*atoms)
 
     def psi(self, residue):
+        """Get psi angle for indicated residue
+
+        Parameters
+        ----------
+        residue : string
+            Key for residue in the form \{NRES\}_\{CHAIN\}
+
+        Returns
+        -------
+        result : float
+            The psi dihedral angle, in degrees, for this residue
+        """
         atoms = self._get_psi_atoms(residue)
         return atom.Atom.dihedral(*atoms)
 

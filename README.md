@@ -60,7 +60,7 @@ algorithm to align molecules with different numbers of atoms.
 >>> chain_a = pdb.select(chain='A')  # equivalent to pdb.select(chain__eq='A')
 >>> chain_b = pdb.select(chain='B')
 >>> len(chain_a) == len(chain_b)
->>> False
+False
 # the align method would fail for these selections
 >>> aligned_chain_b = chain_b.cealign(chain_a)
 RMSD = 0.874903919378  # RMSD of alpha carbons

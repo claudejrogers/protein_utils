@@ -15,6 +15,7 @@ class PQRAtom(Atom):
     def from_line(cls, line):
         """PQR files are whitespace delimited
         """
+        # This doesn't really parse PQRs in general...
         RECORD = slice(0, 6)
         NATOM = slice(6, 11)
         ATOM = slice(12, 16)
@@ -97,6 +98,14 @@ class PQRFile(AtomCollection):
             f.writelines(body)
 
     def to_pdb(self):
+        """Convert PQR to PDB
+
+        Returns
+        -------
+        result : PDBFile
+            A new PDBFile object with unknown the values for the occupancy and
+            b-factor have been set to 0.00
+        """
         pdb_atoms = []
         for a in self.atoms:
             record = a.record

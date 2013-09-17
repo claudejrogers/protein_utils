@@ -21,6 +21,17 @@ class PDBAtom(Atom):
 
     @classmethod
     def from_line(cls, line):
+        """Parse a PDB RECORD line.
+
+        Parameters
+        ----------
+        line : string
+            A RECORD line (ATOM/HETATM) from a PDB file
+
+        Returns
+        -------
+        result : PDBAtom
+        """
         RECORD = slice(0, 6)
         NATOM = slice(6, 11)
         ATOM = slice(12, 16)
@@ -65,6 +76,14 @@ class PDBAtom(Atom):
         self.connections.extend(int(''.join(num)) for num in zip(*it))
 
     def writeline(self):
+        """Write object data as formated RECORD and CONECT strings
+
+        Returns
+        -------
+        line : tuple
+            A two-element tuple containing the RECORD (ATOM/HETATM) line and
+            the CONECT line (if applicable).
+        """
         if not self.atom.startswith('H'):
             atom = ' {0}'.format(self.atom)
         else:
@@ -104,6 +123,18 @@ class PDBResidue(Residue):
 
     @classmethod
     def from_atoms(cls, atoms):
+        """Instantiate new residue object from sorted atom list
+
+        Parameters
+        ----------
+        atoms : list
+            A list of PDBAtom objects sorted by natom. List must contain only
+            one residue.
+
+        Returns
+        -------
+        result : PDBResidue
+        """
         g = groupby(atoms, attrgetter('nres', 'chain', 'icode', 'res'))
         resi = [(key, it) for key, it in g]
         if len(resi) != 1:
@@ -158,8 +189,16 @@ class PDBFile(AtomCollection):
 
     @classmethod
     def from_file(cls, filename):
-        """
-        Initialize from file
+        """Initialize from file
+
+        Parameters
+        ----------
+        filename : path
+            Path to a PDB file
+
+        Returns
+        -------
+        result : PDBFile
         """
         atoms = {}
         with open(filename) as f:
@@ -168,8 +207,17 @@ class PDBFile(AtomCollection):
 
     @classmethod
     def fetch(cls, pdb_code):
-        """
-        Fetch pdb from RCSB Protein Data Bank
+        """Fetch pdb from RCSB Protein Data Bank.
+
+        Parameters
+        ----------
+        pdb_code : str
+            Four character PDB code.
+
+        Returns
+        -------
+        PF : PDBFile
+            New PDBFile object.
         """
         url = "http://www.rcsb.org/pdb/files/{0}.pdb".format(pdb_code)
         f = urlopen(url)
@@ -178,10 +226,19 @@ class PDBFile(AtomCollection):
         return cls(atoms)
 
     def ramachandran_plot(self):
+        """Creates Ramachandran plot of phi and psi backbone angles.
+        """
         residues = PDBResidues(self.atoms)
         residues.ramachandran_plot()
 
     def write_pdb(self, filename):
+        """Write object to PDB file
+
+        Parameters
+        ----------
+        filename : path
+            Path to save PDB file.
+        """
         atoms = []
         conect = []
         for atom in self.atoms:

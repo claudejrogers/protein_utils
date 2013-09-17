@@ -6,7 +6,7 @@ from .pdb import PDBAtom, PDBFile
 
 
 class BGFAtom(Atom):
-    """Parses a RECORD line from a BGF file
+    """Parse, store, and manipulate RECORD line data from a BGF file.
     """
     def __init__(self, record, natom, atom, res, chain, nres, x, y, z, fftype,
                  nbond, nlonepair, charge, fixed):
@@ -20,6 +20,18 @@ class BGFAtom(Atom):
 
     @classmethod
     def from_line(cls, line):
+        """Parse a RECORD line from a BGF file.
+
+        Parameters
+        ----------
+        line : string
+            BGF-formatted line
+
+        Returns
+        -------
+        result : BGFAtom
+            Instantiates a BGFAtom object
+        """
         # Define slices
         RECORD = slice(0, 6)
         NATOM = slice(7, 12)
@@ -56,8 +68,7 @@ class BGFAtom(Atom):
                    nbond, nlonepair, charge, fixed)
 
     def add_connections_from_line(self, line):
-        """
-        Add connection data
+        """Add connection data
         """
         if not line.startswith('CONECT') or int(line[6:12]) != self.natom:
             return
@@ -66,6 +77,12 @@ class BGFAtom(Atom):
 
     def writeline(self):
         """Write BGF ATOM/HETATM line and CONECT info.
+
+        Returns
+        -------
+        result : tuple
+            A two-element tuple containing the ATOM/HETATOM record, and the
+            CONECT information.
         """
         if self.record == 'ATOM' and not self.atom.startswith('H'):
             atom = ' {0}'.format(self.atom)
@@ -98,10 +115,28 @@ class BGFAtom(Atom):
 class BGFFile(AtomCollection):
     """Store and manipulate BGF files.
     """
-    def __init__(self, biogrf=332, descrp='', ff='DREIDING', atoms=None):
+    def __init__(self, biogrf='332', descrp='', ff='DREIDING', atoms=None):
         """Initialize a BGFFile object.
 
         Creates a blank BGF object by default.
+
+        Parameters
+        ----------
+        biogrf : str, optional (default='332')
+            Biogrf format
+
+        descrp : str, optional
+            BGF description.
+
+        ff : str, optional (default='DREIDING')
+            Forcefield used to calculate atom charges and fftype
+
+        atoms : list, optional
+            List of BGFAtom objects used to create BGFFile instance
+
+        Returns
+        -------
+        BF : BGFFile
         """
         self.biogrf = biogrf
         self.descrp = ''
@@ -113,6 +148,15 @@ class BGFFile(AtomCollection):
         """Create a new BGFFile object from a file.
 
         Parses BGF file header and RECORD lines.
+
+        Parameter
+        ---------
+        filename : Path to BGF file
+
+        Returns
+        -------
+        BF : BGFFile
+            New BGFFile object containing data from the file.
         """
         biogrf = ''
         ff = ''
@@ -154,6 +198,13 @@ class BGFFile(AtomCollection):
             atom.fixed = m
 
     def write_bgf(self, filename):
+        """Write object to file
+
+        Parameters
+        ----------
+        filename : path
+            Path to desired file
+        """
         body = ["BIOGRF{0:>5s}\n".format(self.biogrf)]
         if self.descrp:
             body.append("DESCRP {0}\n".format(self.descrp))
@@ -179,6 +230,12 @@ class BGFFile(AtomCollection):
             f.writelines(body)
 
     def to_pdb(self):
+        """Create PDBFile object.
+
+        Returns
+        -------
+        result : PDBFile
+        """
         pdb_atoms = []
         for _atom in self.atoms:
             record = _atom.record
@@ -202,5 +259,7 @@ class BGFFile(AtomCollection):
         return PDBFile(pdb_atoms)
 
     def write_pdb(self, filename):
+        """Write object contents as a PDB file.
+        """
         pdb = self.to_pdb()
         pdb.write_pdb(filename)
