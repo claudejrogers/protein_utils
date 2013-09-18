@@ -1,0 +1,1812 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Source documentation &mdash; protutils 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="protutils 0.0.1 documentation" href="index.html" />
+    <link rel="prev" title="User guide" href="userguide.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="userguide.html" title="User guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">protutils 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Source documentation</a><ul>
+<li><a class="reference internal" href="#module-protutils.atom">atom.py</a></li>
+<li><a class="reference internal" href="#module-protutils.bgf">bgf.py</a></li>
+<li><a class="reference internal" href="#module-protutils.pdb">pdb.py</a></li>
+<li><a class="reference internal" href="#module-protutils.pqr">pqr.py</a></li>
+<li><a class="reference internal" href="#module-protutils.residue">residue.py</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="userguide.html"
+                        title="previous chapter">User guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/srcdocs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="source-documentation">
+<h1>Source documentation<a class="headerlink" href="#source-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-protutils.atom">
+<span id="atom-py"></span><h2>atom.py<a class="headerlink" href="#module-protutils.atom" title="Permalink to this headline">¶</a></h2>
+<p>Base classes for Atom and AtomCollection formats.</p>
+<p>Subclasses extend or override attributes and methods as necessary.</p>
+<dl class="class">
+<dt id="protutils.atom.Atom">
+<em class="property">class </em><tt class="descclassname">protutils.atom.</tt><tt class="descname">Atom</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>charge</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class for an atom description.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>record</strong> : string {ATOM, HETATM}</p>
+<blockquote>
+<div><p>The type of atom. ATOM refers to atoms in amino acids, HETATM refers
+to atoms in other molecules.</p>
+</div></blockquote>
+<p><strong>natom</strong> : int</p>
+<blockquote>
+<div><p>The atom number.</p>
+</div></blockquote>
+<p><strong>atom</strong> : string</p>
+<blockquote>
+<div><p>The identifier for this atom.</p>
+</div></blockquote>
+<p><strong>res</strong> : string</p>
+<blockquote>
+<div><p>The residue of this atom.</p>
+</div></blockquote>
+<p><strong>chain</strong> : string</p>
+<blockquote>
+<div><p>The chain identifier for this atom.</p>
+</div></blockquote>
+<p><strong>nres</strong> : int</p>
+<blockquote>
+<div><p>The residue number of this atom.</p>
+</div></blockquote>
+<p><strong>x</strong> : float</p>
+<blockquote>
+<div><p>The value for the x coordinate of the atom.</p>
+</div></blockquote>
+<p><strong>y</strong> : float</p>
+<blockquote>
+<div><p>The value for the y coordinate of the atom.</p>
+</div></blockquote>
+<p><strong>z</strong> : float</p>
+<blockquote>
+<div><p>The value for the z coordinate of the atom.</p>
+</div></blockquote>
+<p><strong>charge</strong> : float</p>
+<blockquote class="last">
+<div><p>Charge on this atom.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="protutils.atom.Atom.__dict__">
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x10983a280&gt;</em><a class="headerlink" href="#protutils.atom.Atom.__dict__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.Atom.__eq__">
+<tt class="descname">__eq__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.Atom.__hash__">
+<tt class="descname">__hash__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.Atom.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.Atom.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>charge</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.Atom.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.atom'</em><a class="headerlink" href="#protutils.atom.Atom.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.Atom.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.Atom.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.Atom.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#protutils.atom.Atom.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.Atom.add_connections_from_list">
+<tt class="descname">add_connections_from_list</tt><big>(</big><em>connections</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.add_connections_from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a list of atom numbers (natom) that connect with this Atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>connections</strong> : list</p>
+<blockquote class="last">
+<div><p>A list of natoms (ints) that connect to this Atom</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="protutils.atom.Atom.angle">
+<em class="property">static </em><tt class="descname">angle</tt><big>(</big><em>atm1</em>, <em>atm2</em>, <em>atm3</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find angle between three atoms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atm1</strong> : Atom</p>
+<blockquote>
+<div><p>First atom</p>
+</div></blockquote>
+<p><strong>atm2</strong> : Atom</p>
+<blockquote>
+<div><p>Second atom (vertex)</p>
+</div></blockquote>
+<p><strong>atm3</strong> : Atom</p>
+<blockquote>
+<div><p>Third angle</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>angle</strong> : float</p>
+<blockquote class="last">
+<div><p>Angle between the atoms</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="protutils.atom.Atom.cross">
+<em class="property">static </em><tt class="descname">cross</tt><big>(</big><em>atm1</em>, <em>atm2</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.cross" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find cross product of two Atom coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atm1</strong> : Atom</p>
+<blockquote>
+<div><p>First atom</p>
+</div></blockquote>
+<p><strong>atm2</strong> : Atom</p>
+<blockquote>
+<div><p>Second atom</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>cross product</strong> : float</p>
+<blockquote class="last">
+<div><p>The cross product,
+<span class="math">\(\mathbf{A1}_{xyz} \times \mathbf{A2}_{xyz}\)</span></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="protutils.atom.Atom.dihedral">
+<em class="property">static </em><tt class="descname">dihedral</tt><big>(</big><em>atm1</em>, <em>atm2</em>, <em>atm3</em>, <em>atm4</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.dihedral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate dihedral angle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atm1</strong> : Atom</p>
+<blockquote>
+<div><p>First atom</p>
+</div></blockquote>
+<p><strong>atm2</strong> : Atom</p>
+<blockquote>
+<div><p>Second atom</p>
+</div></blockquote>
+<p><strong>atm3</strong> : Atom</p>
+<blockquote>
+<div><p>Third atom</p>
+</div></blockquote>
+<p><strong>atm4</strong> : Atom</p>
+<blockquote>
+<div><p>Fourth atom</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>dihdral angle</strong> : float</p>
+<blockquote class="last">
+<div><p>The dihedral angle in degrees.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="protutils.atom.Atom.dist">
+<em class="property">static </em><tt class="descname">dist</tt><big>(</big><em>atm1</em>, <em>atm2</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.dist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Distance between two atoms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atm1</strong> : Atom</p>
+<blockquote>
+<div><p>First atom</p>
+</div></blockquote>
+<p><strong>atm2</strong> : Atom</p>
+<blockquote>
+<div><p>Second atom</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>dist</strong> : float</p>
+<blockquote class="last">
+<div><p>The distance between atm1 and atm2</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.Atom.distance">
+<tt class="descname">distance</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the distance between two Atoms</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="protutils.atom.Atom.dot">
+<em class="property">static </em><tt class="descname">dot</tt><big>(</big><em>atm1</em>, <em>atm2</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find dot product of two Atoms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atm1</strong> : Atom</p>
+<blockquote>
+<div><p>First atom</p>
+</div></blockquote>
+<p><strong>atm2</strong> : Atom</p>
+<blockquote>
+<div><p>Second atom</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>dot product</strong> : float</p>
+<blockquote class="last">
+<div><p>The dot product,
+<span class="math">\(\mathbf{A1}_{xyz} \cdot \mathbf{A2}_{xyz}\)</span></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="protutils.atom.Atom.nomalize">
+<em class="property">static </em><tt class="descname">nomalize</tt><big>(</big><em>atom</em><big>)</big><a class="headerlink" href="#protutils.atom.Atom.nomalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize Atom coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atom</strong> : Atom</p>
+<blockquote>
+<div><p>First atom</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>coords</strong> : ndarray (1 x 3)</p>
+<blockquote class="last">
+<div><p>Numpy array of normalized coordinates where
+<span class="math">\(|| \mathbf{coords} || = 1\)</span></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.atom.AtomCollection">
+<em class="property">class </em><tt class="descclassname">protutils.atom.</tt><tt class="descname">AtomCollection</tt><big>(</big><em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class for an Atom collection.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atoms</strong> : list (optional, default is None)</p>
+<blockquote>
+<div><p>List of Atom objects</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>result</strong> : AtomCollection</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__and__">
+<tt class="descname">__and__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__and__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the common atoms between self and other</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing atoms common in this and the other
+collection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AtomCollection</span><span class="p">(</span><span class="n">atoms_1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">AtomCollection</span><span class="p">(</span><span class="n">atoms_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">common_atoms</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__contains__">
+<tt class="descname">__contains__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__contains__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if all atoms in other are in this collection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>other</strong> : AtomCollection</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>result</strong> : boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.__dict__">
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x10984da98&gt;</em><a class="headerlink" href="#protutils.atom.AtomCollection.__dict__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__eq__">
+<tt class="descname">__eq__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two AtomCollections for equality.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>other</strong> : AtomCollection</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>result</strong> : boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Atom for a given index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>index</strong> : int</p>
+<blockquote>
+<div><p>The index of the Atom</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>atom</strong> : Atom</p>
+<blockquote class="last">
+<div><p>The atom at the supplied index</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__iand__">
+<tt class="descname">__iand__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__iand__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__ior__">
+<tt class="descname">__ior__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__ior__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__iter__">
+<tt class="descname">__iter__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate through the atoms in this collection</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__ixor__">
+<tt class="descname">__ixor__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__ixor__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__len__">
+<tt class="descname">__len__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of atoms in this collection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.atom'</em><a class="headerlink" href="#protutils.atom.AtomCollection.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__or__">
+<tt class="descname">__or__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__or__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the intersection of atoms in self and other</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing the atoms in this and the other
+collection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AtomCollection</span><span class="p">(</span><span class="n">atoms_1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">AtomCollection</span><span class="p">(</span><span class="n">atoms_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_atoms</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#protutils.atom.AtomCollection.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.__xor__">
+<tt class="descname">__xor__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.__xor__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns atoms in self that are not in other and the atoms in
+other not in self.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object that contains atoms in this collection that are not
+in the other collection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">all_atoms</span> <span class="o">=</span> <span class="n">AtomCollection</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">protons</span> <span class="o">=</span> <span class="n">all_atoms</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">atom__startswith</span><span class="o">=</span><span class="s">&#39;H&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">removed_hydrogens</span> <span class="o">=</span> <span class="n">all_atoms</span> <span class="o">^</span> <span class="n">protons</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.align">
+<tt class="descname">align</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align this object to another and return a new object with the
+aligned coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+<blockquote>
+<div><p>An atom colection containing the same number of atoms as this
+object.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>results</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>New object with coordinates aligned to the other object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.cealign" title="protutils.atom.AtomCollection.cealign"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.cealign</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.aligned_rmsd">
+<tt class="descname">aligned_rmsd</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.aligned_rmsd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the RMSD of the aligned structures of this and another object.
+Both objects must have the same number of atoms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+<blockquote>
+<div><p>An atom colection containing the same number of atoms as this
+object.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>rmsd</strong> : float</p>
+<blockquote class="last">
+<div><p>The root-mean-square deviation between the two AtomCollections
+after alignment.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.rmsd" title="protutils.atom.AtomCollection.rmsd"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.rmsd</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.assign">
+<tt class="descname">assign</tt><big>(</big><em>attr</em>, <em>value</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign new value(s) to an Atom attribute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>attr: Atom attribute</strong> :</p>
+<p><strong>value</strong> : int, string, float, list, tuple</p>
+<blockquote class="last">
+<div><p>The value or values to reassign to the selected attribute</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.backbone">
+<tt class="descname">backbone</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.backbone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new object containing all backbone atoms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing only backbone atoms</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.protein" title="protutils.atom.AtomCollection.protein"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.protein</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.ligand" title="protutils.atom.AtomCollection.ligand"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.ligand</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.sidechains" title="protutils.atom.AtomCollection.sidechains"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.sidechains</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.cealign">
+<tt class="descname">cealign</tt><big>(</big><em>other</em>, <em>alphas=True</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.cealign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align using the cealign algorithm from pymol.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+<blockquote>
+<div><p>An atom colection to align this object. The number of atoms in the
+two objects can be different.</p>
+</div></blockquote>
+<p><strong>alphas</strong> : Boolean, optional (default=True)</p>
+<blockquote>
+<div><p>If True, align CA carbons only. If False, the full selection is
+aligned.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>New object with coordinates aligned to the other object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.align" title="protutils.atom.AtomCollection.align"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.align</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.chains">
+<tt class="descname">chains</tt><a class="headerlink" href="#protutils.atom.AtomCollection.chains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the chains in this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>chains</strong> : lists</p>
+<blockquote class="last">
+<div><p>A list of the unique chain identifiers in this collection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.exclude">
+<tt class="descname">exclude</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.exclude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new AtomCollection where specified atoms are excluded</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>kwargs</strong> :</p>
+<blockquote>
+<div><p>Refer to AtomCollection.select documentation</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>results</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing atoms that are not specified by the
+selection criteria.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.select" title="protutils.atom.AtomCollection.select"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.select</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.groupby_residue">
+<tt class="descname">groupby_residue</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.groupby_residue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dict of residue records grouped by &#8216;nres_chain&#8217; keys</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.ligand">
+<tt class="descname">ligand</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.ligand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new object containing HETATM records.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing non-protein atoms.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.protein" title="protutils.atom.AtomCollection.protein"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.protein</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.backbone" title="protutils.atom.AtomCollection.backbone"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.backbone</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.sidechains" title="protutils.atom.AtomCollection.sidechains"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.sidechains</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.new_coordinates">
+<tt class="descname">new_coordinates</tt><big>(</big><em>matrix</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.new_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new object with new coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>matrix</strong> : numpy N x 3 matrix</p>
+<blockquote>
+<div><p>A matrix with the same shape as self.matrix</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object with the supplied coordinates</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.orient">
+<tt class="descname">orient</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.orient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orient the protein to be centered at the origin with the
+principle axes aligned properly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object with coordinates centered at the origin, with
+principle axes aligned with the Cartesian axes.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.protein">
+<tt class="descname">protein</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.protein" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new object containing ATOM records.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>results</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing only protein atoms.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.ligand" title="protutils.atom.AtomCollection.ligand"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.ligand</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.backbone" title="protutils.atom.AtomCollection.backbone"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.backbone</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.sidechains" title="protutils.atom.AtomCollection.sidechains"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.sidechains</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.ramachandran_plot">
+<tt class="descname">ramachandran_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.ramachandran_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Ramachandran plot for the protein atoms in this collection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.remove_protons">
+<tt class="descname">remove_protons</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.remove_protons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove protons from collection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.renumber_atoms">
+<tt class="descname">renumber_atoms</tt><big>(</big><em>start=1</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.renumber_atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renumber atoms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>start</strong> : int, optional (default=1)</p>
+<blockquote class="last">
+<div><p>The new number of the first atom.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.renumber_residues">
+<tt class="descname">renumber_residues</tt><big>(</big><em>start=1</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.renumber_residues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renumber residues beginning with start.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>start</strong> : int, optional (default=1)</p>
+<blockquote class="last">
+<div><p>The new number of the first residue</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.resi">
+<tt class="descname">resi</tt><a class="headerlink" href="#protutils.atom.AtomCollection.resi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of residue numbers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.residues">
+<tt class="descname">residues</tt><a class="headerlink" href="#protutils.atom.AtomCollection.residues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of residues.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.rmsd">
+<tt class="descname">rmsd</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.rmsd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the root-mean-square deviation (RMSD) between this and another
+object.</p>
+<p><span class="math">\(\mathrm{RMSD} = \sqrt{\frac{1}{N}\sum_{i = 1}^{N}||v_i - w_i||^2}\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>other</strong> : AtomCollection</p>
+<blockquote>
+<div><p>An atom colection containing the same number of atoms as this
+object.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>rmsd</strong> : float</p>
+<blockquote class="last">
+<div><p>The root-mean-square deviation between the two AtomCollections,</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.aligned_rmsd" title="protutils.atom.AtomCollection.aligned_rmsd"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.aligned_rmsd</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.select">
+<tt class="descname">select</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select atoms based on logical criteria</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>kwargs</strong> : various</p>
+<blockquote>
+<div><p>Keys are composed of an atom attribute:</p>
+<ul class="simple">
+<li>chain</li>
+<li>atom</li>
+<li>natom</li>
+<li>nres</li>
+<li>record</li>
+<li>etc</li>
+</ul>
+<p>and a boolean operator:</p>
+<ul class="simple">
+<li>contains <tt class="docutils literal"><span class="pre">value</span> <span class="pre">in</span> <span class="pre">attr</span></tt></li>
+<li>ncontains <tt class="docutils literal"><span class="pre">value</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">attr</span></tt></li>
+<li>eq <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">==</span> <span class="pre">value</span></tt></li>
+<li>ne <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">!=</span> <span class="pre">value</span></tt></li>
+<li>ge <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">&gt;=</span> <span class="pre">value</span></tt></li>
+<li>gt <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">&gt;</span> <span class="pre">value</span></tt></li>
+<li>isin <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">in</span> <span class="pre">value(s)</span></tt></li>
+<li>isnotin <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">values</span></tt></li>
+<li>isclose <tt class="docutils literal"><span class="pre">np.isclose(attr,</span> <span class="pre">value)</span></tt>, for floats</li>
+<li>isnotclose <tt class="docutils literal"><span class="pre">not</span> <span class="pre">np.isclose(attr,</span> <span class="pre">value)</span></tt></li>
+<li>le <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">&lt;=</span> <span class="pre">value</span></tt></li>
+<li>lt <tt class="docutils literal"><span class="pre">attr</span> <span class="pre">&lt;</span> <span class="pre">value</span></tt></li>
+<li>endswith <tt class="docutils literal"><span class="pre">attr.endswith(value)</span></tt>, strings only</li>
+<li>nendswith <tt class="docutils literal"><span class="pre">not</span> <span class="pre">attr.endswith(value)</span></tt></li>
+<li>startswith <tt class="docutils literal"><span class="pre">attr.startswith(value)</span></tt>, strings only</li>
+<li>nstartswith <tt class="docutils literal"><span class="pre">not</span> <span class="pre">attr.startswith(value)</span></tt></li>
+</ul>
+<p>separated by two underscore characters <tt class="docutils literal"><span class="pre">__</span></tt>.
+For example:
+chain__eq, nres__gt, atom__contains.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>selection</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>New object containing the selected subset of Atoms.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.exclude" title="protutils.atom.AtomCollection.exclude"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.exclude</span></tt></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">prot</span> <span class="o">=</span> <span class="n">AtomCollection</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chain_a</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">chain__eq</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">other_chains</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">chain__ne</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residues_1_to_250</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">nres__le</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hydrogens</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">atom__startswith</span><span class="o">=</span><span class="s">&#39;H&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res356_A</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">chain</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">nres</span><span class="o">=</span><span class="mi">356</span><span class="p">)</span>  <span class="c"># default is &#39;eq&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pos_res</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">res__isin</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;LYS&#39;</span><span class="p">,</span> <span class="s">&#39;ARG&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Select neutral residues</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">charged</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&#39;LYS&#39;</span><span class="p">,</span> <span class="s">&#39;ARG&#39;</span><span class="p">,</span> <span class="s">&#39;ASP&#39;</span><span class="p">,</span> <span class="s">&#39;GLU&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neutral_res</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">res__isnotin</span><span class="o">=</span><span class="n">charged</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># select creates new object. Allows chaining:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selection</span> <span class="o">=</span> <span class="n">prot</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">nres__gt</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">nres__lt</span><span class="o">=</span><span class="mi">245</span><span class="p">)</span><span class="o">.</span><span class="n">sidechains</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.atom.AtomCollection.sequence">
+<tt class="descname">sequence</tt><a class="headerlink" href="#protutils.atom.AtomCollection.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns one-letter code sequence of collection.
+Missing residues are filled in with -&#8216;s</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>sequence</strong> : string</p>
+<blockquote class="last">
+<div><p>The sequence of the protein residues in this AtomCollection.
+Gaps in the sequence are indicated by &#8216;-&#8216;.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.sidechains">
+<tt class="descname">sidechains</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.sidechains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new object containing all sidechain atoms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object containing only sidechain atoms.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.protein" title="protutils.atom.AtomCollection.protein"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.protein</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.ligand" title="protutils.atom.AtomCollection.ligand"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.ligand</span></tt></a>, <a class="reference internal" href="#protutils.atom.AtomCollection.backbone" title="protutils.atom.AtomCollection.backbone"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.backbone</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.atom.AtomCollection.within">
+<tt class="descname">within</tt><big>(</big><em>distance</em>, <em>other</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.within" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get atoms in this instance within some distance of atoms in
+other instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>distance</strong> : float</p>
+<blockquote>
+<div><p>The maximum distance between atoms in this object and the other
+object.</p>
+</div></blockquote>
+<p><strong>other</strong> : AtomCollection</p>
+<blockquote>
+<div><p>The other object...</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>New object containing Atoms in this object that are less than
+the selected distance from the other object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-protutils.bgf">
+<span id="bgf-py"></span><h2>bgf.py<a class="headerlink" href="#module-protutils.bgf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="protutils.bgf.BGFAtom">
+<em class="property">class </em><tt class="descclassname">protutils.bgf.</tt><tt class="descname">BGFAtom</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>fftype</em>, <em>nbond</em>, <em>nlonepair</em>, <em>charge</em>, <em>fixed</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFAtom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.atom.Atom" title="protutils.atom.Atom"><tt class="xref py py-class docutils literal"><span class="pre">protutils.atom.Atom</span></tt></a></p>
+<p>Parse, store, and manipulate RECORD line data from a BGF file.</p>
+<dl class="method">
+<dt id="protutils.bgf.BGFAtom.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>fftype</em>, <em>nbond</em>, <em>nlonepair</em>, <em>charge</em>, <em>fixed</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFAtom.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.bgf.BGFAtom.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.bgf'</em><a class="headerlink" href="#protutils.bgf.BGFAtom.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFAtom.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.bgf.BGFAtom.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFAtom.add_connections_from_line">
+<tt class="descname">add_connections_from_line</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFAtom.add_connections_from_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add connection data</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.bgf.BGFAtom.from_line">
+<em class="property">classmethod </em><tt class="descname">from_line</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFAtom.from_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a RECORD line from a BGF file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>line</strong> : string</p>
+<blockquote>
+<div><p>BGF-formatted line</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : BGFAtom</p>
+<blockquote class="last">
+<div><p>Instantiates a BGFAtom object</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFAtom.writeline">
+<tt class="descname">writeline</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.bgf.BGFAtom.writeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write BGF ATOM/HETATM line and CONECT info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : tuple</p>
+<blockquote class="last">
+<div><p>A two-element tuple containing the ATOM/HETATOM record, and the
+CONECT information.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.bgf.BGFFile">
+<em class="property">class </em><tt class="descclassname">protutils.bgf.</tt><tt class="descname">BGFFile</tt><big>(</big><em>biogrf='332'</em>, <em>descrp=''</em>, <em>ff='DREIDING'</em>, <em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.atom.AtomCollection" title="protutils.atom.AtomCollection"><tt class="xref py py-class docutils literal"><span class="pre">protutils.atom.AtomCollection</span></tt></a></p>
+<p>Store and manipulate BGF files.</p>
+<dl class="method">
+<dt id="protutils.bgf.BGFFile.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>biogrf='332'</em>, <em>descrp=''</em>, <em>ff='DREIDING'</em>, <em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a BGFFile object.</p>
+<p>Creates a blank BGF object by default.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>biogrf</strong> : str, optional (default=&#8216;332&#8217;)</p>
+<blockquote>
+<div><p>Biogrf format</p>
+</div></blockquote>
+<p><strong>descrp</strong> : str, optional</p>
+<blockquote>
+<div><p>BGF description.</p>
+</div></blockquote>
+<p><strong>ff</strong> : str, optional (default=&#8217;DREIDING&#8217;)</p>
+<blockquote>
+<div><p>Forcefield used to calculate atom charges and fftype</p>
+</div></blockquote>
+<p><strong>atoms</strong> : list, optional</p>
+<blockquote>
+<div><p>List of BGFAtom objects used to create BGFFile instance</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>BF</strong> : BGFFile</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.bgf.BGFFile.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.bgf'</em><a class="headerlink" href="#protutils.bgf.BGFFile.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.bgf.BGFFile.fftypes">
+<tt class="descname">fftypes</tt><a class="headerlink" href="#protutils.bgf.BGFFile.fftypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.bgf.BGFFile.from_file">
+<em class="property">classmethod </em><tt class="descname">from_file</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile.from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BGFFile object from a file.</p>
+<p>Parses BGF file header and RECORD lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>BF</strong> : BGFFile</p>
+<blockquote class="last">
+<div><p>New BGFFile object containing data from the file.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFFile.set_movable">
+<tt class="descname">set_movable</tt><big>(</big><em>movable=True</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile.set_movable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFFile.to_pdb">
+<tt class="descname">to_pdb</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile.to_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create PDBFile object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><strong>result</strong> : PDBFile</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFFile.write_bgf">
+<tt class="descname">write_bgf</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile.write_bgf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write object to file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : path</p>
+<blockquote class="last">
+<div><p>Path to desired file</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.bgf.BGFFile.write_pdb">
+<tt class="descname">write_pdb</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.bgf.BGFFile.write_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write object contents as a PDB file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-protutils.pdb">
+<span id="pdb-py"></span><h2>pdb.py<a class="headerlink" href="#module-protutils.pdb" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="protutils.pdb.PDBAtom">
+<em class="property">class </em><tt class="descclassname">protutils.pdb.</tt><tt class="descname">PDBAtom</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>altloc</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>icode</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>occupancy</em>, <em>bfactor</em>, <em>element</em>, <em>charge</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBAtom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.atom.Atom" title="protutils.atom.Atom"><tt class="xref py py-class docutils literal"><span class="pre">protutils.atom.Atom</span></tt></a></p>
+<p>PDB file class</p>
+<dl class="method">
+<dt id="protutils.pdb.PDBAtom.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>altloc</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>icode</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>occupancy</em>, <em>bfactor</em>, <em>element</em>, <em>charge</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBAtom.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.pdb.PDBAtom.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.pdb'</em><a class="headerlink" href="#protutils.pdb.PDBAtom.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBAtom.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pdb.PDBAtom.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBAtom.add_connections_from_line">
+<tt class="descname">add_connections_from_line</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBAtom.add_connections_from_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.pdb.PDBAtom.from_line">
+<em class="property">classmethod </em><tt class="descname">from_line</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBAtom.from_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a PDB RECORD line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>line</strong> : string</p>
+<blockquote>
+<div><p>A RECORD line (ATOM/HETATM) from a PDB file</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>result</strong> : PDBAtom</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBAtom.writeline">
+<tt class="descname">writeline</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pdb.PDBAtom.writeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write object data as formated RECORD and CONECT strings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>line</strong> : tuple</p>
+<blockquote class="last">
+<div><p>A two-element tuple containing the RECORD (ATOM/HETATM) line and
+the CONECT line (if applicable).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.pdb.PDBFile">
+<em class="property">class </em><tt class="descclassname">protutils.pdb.</tt><tt class="descname">PDBFile</tt><big>(</big><em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.atom.AtomCollection" title="protutils.atom.AtomCollection"><tt class="xref py py-class docutils literal"><span class="pre">protutils.atom.AtomCollection</span></tt></a></p>
+<dl class="attribute">
+<dt id="protutils.pdb.PDBFile.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.pdb'</em><a class="headerlink" href="#protutils.pdb.PDBFile.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.pdb.PDBFile.fetch">
+<em class="property">classmethod </em><tt class="descname">fetch</tt><big>(</big><em>pdb_code</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBFile.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch pdb from RCSB Protein Data Bank.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>pdb_code</strong> : str</p>
+<blockquote>
+<div><p>Four character PDB code.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>PF</strong> : PDBFile</p>
+<blockquote class="last">
+<div><p>New PDBFile object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.pdb.PDBFile.from_file">
+<em class="property">classmethod </em><tt class="descname">from_file</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBFile.from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize from file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : path</p>
+<blockquote>
+<div><p>Path to a PDB file</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>result</strong> : PDBFile</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBFile.ramachandran_plot">
+<tt class="descname">ramachandran_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pdb.PDBFile.ramachandran_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Ramachandran plot of phi and psi backbone angles.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBFile.write_pdb">
+<tt class="descname">write_pdb</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBFile.write_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write object to PDB file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : path</p>
+<blockquote class="last">
+<div><p>Path to save PDB file.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.pdb.PDBResidue">
+<em class="property">class </em><tt class="descclassname">protutils.pdb.</tt><tt class="descname">PDBResidue</tt><big>(</big><em>res</em>, <em>nres</em>, <em>chain</em>, <em>icode</em>, <em>atoms</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.residue.Residue" title="protutils.residue.Residue"><tt class="xref py py-class docutils literal"><span class="pre">protutils.residue.Residue</span></tt></a></p>
+<dl class="method">
+<dt id="protutils.pdb.PDBResidue.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>res</em>, <em>nres</em>, <em>chain</em>, <em>icode</em>, <em>atoms</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.pdb.PDBResidue.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.pdb'</em><a class="headerlink" href="#protutils.pdb.PDBResidue.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.pdb.PDBResidue.from_atoms">
+<em class="property">classmethod </em><tt class="descname">from_atoms</tt><big>(</big><em>atoms</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidue.from_atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate new residue object from sorted atom list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atoms</strong> : list</p>
+<blockquote>
+<div><p>A list of PDBAtom objects sorted by natom. List must contain only
+one residue.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>result</strong> : PDBResidue</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBResidue.get_next">
+<tt class="descname">get_next</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidue.get_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns key for &#8216;next&#8217; residue</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pdb.PDBResidue.get_prev">
+<tt class="descname">get_prev</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidue.get_prev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns key for &#8216;previous&#8217; residue</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.pdb.PDBResidues">
+<em class="property">class </em><tt class="descclassname">protutils.pdb.</tt><tt class="descname">PDBResidues</tt><big>(</big><em>atoms</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.residue.Residues" title="protutils.residue.Residues"><tt class="xref py py-class docutils literal"><span class="pre">protutils.residue.Residues</span></tt></a></p>
+<dl class="method">
+<dt id="protutils.pdb.PDBResidues.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>atoms</em><big>)</big><a class="headerlink" href="#protutils.pdb.PDBResidues.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.pdb.PDBResidues.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.pdb'</em><a class="headerlink" href="#protutils.pdb.PDBResidues.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-protutils.pqr">
+<span id="pqr-py"></span><h2>pqr.py<a class="headerlink" href="#module-protutils.pqr" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="protutils.pqr.PQRAtom">
+<em class="property">class </em><tt class="descclassname">protutils.pqr.</tt><tt class="descname">PQRAtom</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>charge</em>, <em>radius</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRAtom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.atom.Atom" title="protutils.atom.Atom"><tt class="xref py py-class docutils literal"><span class="pre">protutils.atom.Atom</span></tt></a></p>
+<p>Parse PQR atom format</p>
+<dl class="method">
+<dt id="protutils.pqr.PQRAtom.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>record</em>, <em>natom</em>, <em>atom</em>, <em>res</em>, <em>chain</em>, <em>nres</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>charge</em>, <em>radius</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRAtom.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.pqr.PQRAtom.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.pqr'</em><a class="headerlink" href="#protutils.pqr.PQRAtom.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.pqr.PQRAtom.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pqr.PQRAtom.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.pqr.PQRAtom.from_line">
+<em class="property">classmethod </em><tt class="descname">from_line</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRAtom.from_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>PQR files are whitespace delimited</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pqr.PQRAtom.writeline">
+<tt class="descname">writeline</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pqr.PQRAtom.writeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.pqr.PQRFile">
+<em class="property">class </em><tt class="descclassname">protutils.pqr.</tt><tt class="descname">PQRFile</tt><big>(</big><em>ff</em>, <em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#protutils.atom.AtomCollection" title="protutils.atom.AtomCollection"><tt class="xref py py-class docutils literal"><span class="pre">protutils.atom.AtomCollection</span></tt></a></p>
+<dl class="method">
+<dt id="protutils.pqr.PQRFile.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>ff</em>, <em>atoms=None</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.pqr.PQRFile.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.pqr'</em><a class="headerlink" href="#protutils.pqr.PQRFile.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.pqr.PQRFile.from_file">
+<em class="property">classmethod </em><tt class="descname">from_file</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRFile.from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.pqr.PQRFile.to_pdb">
+<tt class="descname">to_pdb</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.pqr.PQRFile.to_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert PQR to PDB</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : PDBFile</p>
+<blockquote class="last">
+<div><p>A new PDBFile object with unknown the values for the occupancy and
+b-factor have been set to 0.00</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pqr.PQRFile.write_pdb">
+<tt class="descname">write_pdb</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRFile.write_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write object to a PQR file with PDB-style formatting.</p>
+<p>Uses <tt class="docutils literal"><span class="pre">PQRFile.to_pdb()</span></tt> to convert to <tt class="docutils literal"><span class="pre">pdb</span></tt> object before writing
+data to file.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.pqr.PQRFile.to_pdb" title="protutils.pqr.PQRFile.to_pdb"><tt class="xref py py-obj docutils literal"><span class="pre">PQRFile.to_pdb</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.pqr.PQRFile.write_pqr">
+<tt class="descname">write_pqr</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#protutils.pqr.PQRFile.write_pqr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write object to a PQR file with PDB-style formatting.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-protutils.residue">
+<span id="residue-py"></span><h2>residue.py<a class="headerlink" href="#module-protutils.residue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="protutils.residue.Residue">
+<em class="property">class </em><tt class="descclassname">protutils.residue.</tt><tt class="descname">Residue</tt><big>(</big><em>res</em>, <em>nres</em>, <em>chain</em>, <em>atoms</em><big>)</big><a class="headerlink" href="#protutils.residue.Residue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Container for a residue</p>
+<dl class="attribute">
+<dt id="protutils.residue.Residue.__dict__">
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x109ceed00&gt;</em><a class="headerlink" href="#protutils.residue.Residue.__dict__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residue.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#protutils.residue.Residue.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Atom object with selected name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residue.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>res</em>, <em>nres</em>, <em>chain</em>, <em>atoms</em><big>)</big><a class="headerlink" href="#protutils.residue.Residue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.residue.Residue.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.residue'</em><a class="headerlink" href="#protutils.residue.Residue.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.residue.Residue.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#protutils.residue.Residue.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="protutils.residue.Residue.from_atoms">
+<em class="property">classmethod </em><tt class="descname">from_atoms</tt><big>(</big><em>atoms</em><big>)</big><a class="headerlink" href="#protutils.residue.Residue.from_atoms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residue.get_next">
+<tt class="descname">get_next</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.residue.Residue.get_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns key for &#8216;next&#8217; residue</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residue.get_prev">
+<tt class="descname">get_prev</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.residue.Residue.get_prev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns key for &#8216;previous&#8217; residue</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="protutils.residue.Residues">
+<em class="property">class </em><tt class="descclassname">protutils.residue.</tt><tt class="descname">Residues</tt><big>(</big><em>atoms</em><big>)</big><a class="headerlink" href="#protutils.residue.Residues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="attribute">
+<dt id="protutils.residue.Residues.__dict__">
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x109ceef68&gt;</em><a class="headerlink" href="#protutils.residue.Residues.__dict__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residues.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#protutils.residue.Residues.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residues.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>atoms</em><big>)</big><a class="headerlink" href="#protutils.residue.Residues.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates new <tt class="docutils literal"><span class="pre">Residues</span></tt> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>atoms</strong> : list</p>
+<blockquote class="last">
+<div><p>Sorted collection of <tt class="docutils literal"><span class="pre">Atom</span></tt> objects.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.residue.Residues.__module__">
+<tt class="descname">__module__</tt><em class="property"> = 'protutils.residue'</em><a class="headerlink" href="#protutils.residue.Residues.__module__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="protutils.residue.Residues.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#protutils.residue.Residues.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residues.phi">
+<tt class="descname">phi</tt><big>(</big><em>residue</em><big>)</big><a class="headerlink" href="#protutils.residue.Residues.phi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get <span class="math">\(\phi\)</span> angle for indicated residue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>residue</strong> : string</p>
+<blockquote>
+<div><p>Key for residue in the form {NRES}_{CHAIN}</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : float</p>
+<blockquote class="last">
+<div><p>The <span class="math">\(\phi\)</span> (phi) dihedral angle, in degrees, for this
+residue.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.residue.Residues.psi" title="protutils.residue.Residues.psi"><tt class="xref py py-obj docutils literal"><span class="pre">Residues.psi</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residues.psi">
+<tt class="descname">psi</tt><big>(</big><em>residue</em><big>)</big><a class="headerlink" href="#protutils.residue.Residues.psi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get <span class="math">\(\psi\)</span> angle for indicated residue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>residue</strong> : string</p>
+<blockquote>
+<div><p>Key for residue in the form {NRES}_{CHAIN}</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : float</p>
+<blockquote class="last">
+<div><p>The <span class="math">\(\psi\)</span> (psi) dihedral angle, in degrees, for this
+residue.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.residue.Residues.phi" title="protutils.residue.Residues.phi"><tt class="xref py py-obj docutils literal"><span class="pre">Residues.phi</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="protutils.residue.Residues.ramachandran_plot">
+<tt class="descname">ramachandran_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.residue.Residues.ramachandran_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot <span class="math">\(\psi\)</span> versus <span class="math">\(\phi\)</span> angles for all
+residues.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="userguide.html" title="User guide"
+             >previous</a> |</li>
+        <li><a href="index.html">protutils 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Claude J. Rogers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+Source documentation
+====================
+
+atom.py
+-------
+.. automodule:: protutils.atom
+
+.. autoclass:: protutils.atom.Atom
+    :members:
+    :undoc-members:
+    :special-members:
+    :show-inheritance:
+
+.. autoclass:: protutils.atom.AtomCollection
+    :members:
+    :undoc-members:
+    :special-members:
+    :show-inheritance:
+
+
+bgf.py
+------
+.. automodule:: protutils.bgf
+
+.. autoclass:: protutils.bgf.BGFAtom
+    :members:
+    :undoc-members:
+    :special-members:
+    :show-inheritance:
+
+.. autoclass:: protutils.bgf.BGFFile
+    :members:
+    :undoc-members:
+    :special-members:
+    :show-inheritance:
+
+
+pdb.py
+------
+.. automodule:: protutils.pdb
+
+.. autoclass:: protutils.pdb.PDBAtom
+    :members:
+    :undoc-members:
+    :special-members:
+    :show-inheritance:
+
+.. autoclass:: protutils.pdb.PDBFile
+    :members:
+    :undoc-members:
+    :special-members:
+    :show-inheritance:
+
+
+
