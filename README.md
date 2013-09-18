@@ -7,7 +7,7 @@ Utilities to manipulate PDB, PQR, BGF, (mol2, mae, etc.) files.
 
 ## Build
 
-Requires numpy and metplotlib.
+Requires numpy and matplotlib.
 
     python setup.py build_ext --inplace
 
@@ -77,11 +77,19 @@ Visualizing as before:
 
 ```python
 >>> from protutils.pdb import PDBFile
->>> pdb.fetch('1HPV')
+>>> # write a small helper function
+>>> def residues_for_selection(selected, pdbfile):
+...     """Get all residues atoms for a selection
+...     """
+...     residues = {atm.nres for atm in selected}
+...     return pdbfile.select(nres__isin=residues)
+...
+>>> pdb = PDBfile.fetch('1HPV')
 # Select ligand
 >>> ligand = pdb.ligand()
 # select protein atoms with 5 Angstroms of the ligand
->>> prot = pdb.protein().within(5.0, ligand)
+>>> atoms = pdb.protein().within(5.0, ligand)
+>>> prot = residues_for_selection(atoms, pdb)
 >>> ligand.write_pdb('ligand.pdb')
 >>> prot.write_pdb('prot.pdb')
 ```
@@ -109,7 +117,7 @@ png example.png
 
 ```python
 >>> from protutils.pdb import PDBFile
->>> pdb.fetch('4K5Y')
+>>> pdb = PDBFile.fetch('4K5Y')
 >>> protein = pdb.protein()  # remove HETATM records
 >>> protein.ramachandran_plot()
 ```

@@ -3,24 +3,41 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to protutils's documentation!
-=====================================
+protutils documentation
+=======================
+
+:Author: Claude Rogers <cjrogers@caltech.edu>
+:Source code: `github <https://github.com/claudejrogers/protein_utils>`_
+
+Description
+===========
+
+Add a description of the package here.
+
+Dependencies
+============
+
+protutils depends on::
+
+    numpy
+    matplotlib
+
+
+Installing
+==========
+
+To build::
+
+    $ python setup.py build_ext --inplace
 
 Contents:
+=========
 
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: protutils.atom
-.. autoclass:: protutils.atom.Atom
-    :members:
-    :undoc-members:
-    :special-members:
-.. autoclass:: protutils.atom.AtomCollection
-    :members:
-    :undoc-members:
-    :special-members:
-
+   userguide.rst
+   srcdocs.rst
 
 Indices and tables
 ==================

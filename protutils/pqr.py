@@ -89,6 +89,8 @@ class PQRFile(AtomCollection):
         return cls(ff, atoms)
 
     def write_pqr(self, filename):
+        """Write object to a PQR file with PDB-style formatting.
+        """
         body = ["REMARK   1 Forcefield Used: {0}\n".format(self.ff)]
         for a in self.atoms:
             line = a.writeline()
@@ -129,5 +131,14 @@ class PQRFile(AtomCollection):
         return PDBFile(pdb_atoms)
 
     def write_pdb(self, filename):
+        """Write object to a PQR file with PDB-style formatting.
+
+        Uses ``PQRFile.to_pdb()`` to convert to ``pdb`` object before writing
+        data to file.
+
+        See Also
+        --------
+        PQRFile.to_pdb
+        """
         pdb = self.to_pdb()
         pdb.write_pdb(filename)

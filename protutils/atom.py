@@ -1,9 +1,14 @@
+"""Base classes for Atom and AtomCollection formats.
+
+Subclasses extend or override attributes and methods as necessary.
+"""
 import operator
 from copy import deepcopy
 from itertools import groupby, product
 import numpy as np
 
 import residue
+import _operator as protop
 from .cealign.kabsch import aligned_rmsd, align, align_substructure
 from .cealign.cealign import distance_matrix, similarity_matrix, find_path
 
@@ -144,7 +149,8 @@ class Atom(object):
         Returns
         -------
         coords : ndarray (1 x 3)
-            Numpy array of normalized coordinates (|| coords || == 1)
+            Numpy array of normalized coordinates where
+            :math:`|| \\mathbf{coords} || = 1`
         """
         return _normalize(atom.coord)
 
@@ -248,7 +254,16 @@ class Atom(object):
 
 
 class AtomCollection(object):
-    """Base class for an Atom collection
+    """Base class for an Atom collection.
+
+    Parameters
+    ----------
+    atoms : list (optional, default is None)
+        List of Atom objects
+
+    Returns
+    -------
+    result : AtomCollection
     """
     def __init__(self, atoms=None):
         self.atoms = atoms or []
@@ -479,7 +494,7 @@ class AtomCollection(object):
 
         See Also
         --------
-        AtomCollection.protein, AtomCollection.ligands,
+        AtomCollection.protein, AtomCollection.ligand,
         AtomCollection.sidechains
         """
         bbatm = {'N', 'HN', 'CA', 'HCA', 'C', 'O', 'OXT', 'HA', '1HA', '2HA',
@@ -497,7 +512,7 @@ class AtomCollection(object):
 
         See Also
         --------
-        AtomCollection.protein, AtomCollection.ligands,
+        AtomCollection.protein, AtomCollection.ligand,
         AtomCollection.backbone
         """
         bbatm = {'N', 'HN', 'CA', 'HCA', 'C', 'O', 'OXT', 'HA', '1HA', '2HA',
@@ -537,7 +552,7 @@ class AtomCollection(object):
         residues = residue.Residues(self.atoms)
         residues.ramachandran_plot()
 
-    def _select_or_exclude(self, metric, **kwargs):
+    def _select_or_exclude(self, metric, deep_copy, **kwargs):
         atoms = self.atoms[::]
         for key, value in kwargs.iteritems():
             try:
@@ -548,10 +563,8 @@ class AtomCollection(object):
                     func = 'eq'
                 else:
                     raise ValueError(exception)
-            if hasattr(operator, func):
-                f = getattr(operator, func)
-            elif hasattr(str, func):
-                f = lambda obj, value: getattr(obj, func)(value)
+            if hasattr(protop, func):
+                f = getattr(protop, func)
             else:
                 raise AttributeError("Can't apply {0}".format(func))
             if metric == 'select':
@@ -561,7 +574,7 @@ class AtomCollection(object):
             else:
                 raise ValueError("Unknown metric {0}.".format(metric))
         if atoms:
-            return self._init_with_atoms(atoms)
+            return self._init_with_atoms(atoms, deepcopy_=deep_copy)
         return None
 
     def select(self, **kwargs):
@@ -570,15 +583,41 @@ class AtomCollection(object):
         Parameters
         ----------
         kwargs : various
-            Keys are composed of an atom attribute (chain, atom, natom, nres,
-            record, etc.) and a boolean operator (contains, eq, le, gt,
-            startswith), separated by two underscores.
+            Keys are composed of an atom attribute:
+
+            * chain
+            * atom
+            * natom
+            * nres
+            * record
+            * etc
+
+            and a boolean operator:
+
+            * contains ``value in attr``
+            * ncontains ``value not in attr``
+            * eq ``attr == value``
+            * ne ``attr != value``
+            * ge ``attr >= value``
+            * gt ``attr > value``
+            * isin ``attr in value(s)``
+            * isnotin ``attr not in values``
+            * isclose ``np.isclose(attr, value)``, for floats
+            * isnotclose ``not np.isclose(attr, value)``
+            * le ``attr <= value``
+            * lt ``attr < value``
+            * endswith ``attr.endswith(value)``, strings only
+            * nendswith ``not attr.endswith(value)``
+            * startswith ``attr.startswith(value)``, strings only
+            * nstartswith ``not attr.startswith(value)``
+
+            separated by two underscore characters ``__``.
             For example:
             chain__eq, nres__gt, atom__contains.
 
         Returns
         -------
-        AC : AtomCollection
+        selection : AtomCollection
             New object containing the selected subset of Atoms.
 
         See Also
@@ -593,10 +632,20 @@ class AtomCollection(object):
         >>> residues_1_to_250 = prot.select(nres__le=250)
         >>> hydrogens = prot.select(atom__startswith='H')
         >>> res356_A = prot.select(chain='A', nres=356)  # default is 'eq'
+        >>> pos_res = prot.select(res__isin={'LYS', 'ARG'})
+        >>> # Select neutral residues
+        >>> charged = set(['LYS', 'ARG', 'ASP', 'GLU'])
+        >>> neutral_res = prot.select(res__isnotin=charged)
+        >>> # select creates new object. Allows chaining:
         >>> selection = prot.select(nres__gt=200, nres__lt=245).sidechains()
 
         """
-        return self._select_or_exclude('select', **kwargs)
+        if 'deep_copy' in kwargs:
+            deep_copy = kwargs['deep_copy']
+            del kwargs['deep_copy']
+        else:
+            deep_copy = True
+        return self._select_or_exclude('select', deep_copy, **kwargs)
 
     def exclude(self, **kwargs):
         """Create new AtomCollection where specified atoms are excluded
@@ -616,7 +665,38 @@ class AtomCollection(object):
         --------
         AtomCollection.select
         """
-        return self._select_or_exclude('exclude', **kwargs)
+        if 'deep_copy' in kwargs:
+            deep_copy = kwargs['deep_copy']
+            del kwargs['deep_copy']
+        else:
+            deep_copy = True
+        return self._select_or_exclude('exclude', deep_copy, **kwargs)
+
+    def _assign_values(self, attr, values):
+        if not len(self.atoms) == len(values):
+            raise ValueError('Values must be the same size as atom list')
+        for obj, value in zip(self.atoms, values):
+            setattr(obj, attr, value)
+
+    def assign(self, attr, value):
+        """Assign new value(s) to an Atom attribute
+
+        Parameters
+        ----------
+        attr: Atom attribute
+
+        value : int, string, float, list, tuple
+            The value or values to reassign to the selected attribute
+        """
+        if not hasattr(self.atoms[0], attr):
+            raise AttributeError(
+                'Atom list entries do not have attribute: {0}'.format(attr)
+            )
+        if isinstance(value, (tuple, list)):
+            self._assign_values(attr, value)
+        else:
+            for atm in self.atoms:
+                setattr(atm, attr, value)
 
     def within(self, distance, other):
         """Get atoms in this instance within some distance of atoms in
@@ -719,6 +799,8 @@ class AtomCollection(object):
         """Return the root-mean-square deviation (RMSD) between this and another
         object.
 
+        :math:`\\mathrm{RMSD} = \\sqrt{\\frac{1}{N}\\sum_{i = 1}^{N}||v_i - w_i||^2}`
+
         Parameters
         ----------
         other : AtomCollection
@@ -728,7 +810,7 @@ class AtomCollection(object):
         Returns
         -------
         rmsd : float
-            The root-mean-square deviation between the two AtomCollections.
+            The root-mean-square deviation between the two AtomCollections,
 
         See Also
         --------
@@ -774,7 +856,7 @@ class AtomCollection(object):
         result : AtomCollection
             A new object with the supplied coordinates
         """
-        if self.matrix != matrix.shape:
+        if self.matrix.shape != matrix.shape:
             raise ValueError("New coordinates must have the same dimensions"
                              " as current coordinates.")
         atoms = [deepcopy(a) for a in self.atoms]

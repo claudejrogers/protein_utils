@@ -30,7 +30,7 @@ class Residue(object):
         return cls(res, nres, chain, list(it))
 
     def __getitem__(self, name):
-        """Return *Atom object with selected name
+        """Return Atom object with selected name
         """
         return self._dict[name]
 
@@ -48,6 +48,13 @@ class Residue(object):
 class Residues(object):
 
     def __init__(self, atoms):
+        """Instantiates new ``Residues`` object.
+
+        Parameters
+        ----------
+        atoms : list
+            Sorted collection of ``Atom`` objects.
+        """
         g = groupby(atoms, attrgetter('nres', 'chain', 'res'))
         self._dict = {
             '{0}_{1}'.format(nres, chain): Residue(
@@ -95,7 +102,7 @@ class Residues(object):
         return N, CA, C, N_
 
     def phi(self, residue):
-        """Get phi angle for indicated residue
+        """Get :math:`\\phi` angle for indicated residue
 
         Parameters
         ----------
@@ -105,13 +112,18 @@ class Residues(object):
         Returns
         -------
         result : float
-            The phi dihedral angle, in degrees, for this residue
+            The :math:`\\phi` (phi) dihedral angle, in degrees, for this
+            residue.
+
+        See Also
+        --------
+        Residues.psi
         """
         atoms = self._get_phi_atoms(residue)
         return atom.Atom.dihedral(*atoms)
 
     def psi(self, residue):
-        """Get psi angle for indicated residue
+        """Get :math:`\\psi` angle for indicated residue
 
         Parameters
         ----------
@@ -121,12 +133,20 @@ class Residues(object):
         Returns
         -------
         result : float
-            The psi dihedral angle, in degrees, for this residue
+            The :math:`\\psi` (psi) dihedral angle, in degrees, for this
+            residue.
+
+        See Also
+        --------
+        Residues.phi
         """
         atoms = self._get_psi_atoms(residue)
         return atom.Atom.dihedral(*atoms)
 
     def ramachandran_plot(self):
+        """Plot :math:`\\psi` versus :math:`\\phi` angles for all
+        residues.
+        """
         x, y = [], []
         for r in self._list:
             try:
