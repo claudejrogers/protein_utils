@@ -7,7 +7,7 @@ Utilities to manipulate PDB, PQR, BGF, (mol2, mae, etc.) files.
 
 ## Build
 
-Requires numpy and matplotlib.
+Requires numpy, matplotlib, and scikit-learn.
 
     python setup.py build_ext --inplace
 
@@ -143,6 +143,7 @@ Visualize transformed structure in pymol with axes marked by rgb lines.
 
 * numpy
 * matplotlib
+* scikit-learn
 
 ## TODO
 

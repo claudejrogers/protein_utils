@@ -21,6 +21,7 @@ protutils depends on::
 
     numpy
     matplotlib
+    scikit-learn
 
 
 Installing
