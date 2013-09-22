@@ -118,9 +118,9 @@ class SphereFile(object):
 
     def bounding_box(self, dist=2.8):
         delta = np.array([-dist, dist])
-        min_ = self.matrix.min(axis=0)
-        max_ = self.matrix.max(axis=0)
-        minmax = np.concatenate((min_, max_)).reshape((2, 3)).T + delta
+        min_ = self.matrix.min(axis=0)[:, np.newaxis]
+        max_ = self.matrix.max(axis=0)[:, np.newaxis]
+        minmax = np.concatenate((min_, max_), axis=1) + delta
         box = []
         for (x, y, z) in product(*minmax):
             box.append([x, y, z])

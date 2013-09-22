@@ -60,7 +60,7 @@ class PDBAtom(Atom):
         z = float(line[Z])
         occupancy = float(line[OCCUP])
         bfactor = float(line[BFACT])
-        element = line[ELEM].strip()
+        element = line[ELEM].strip() or atom[0]
         try:
             charge = line[CHARGE]
         except ValueError:
@@ -84,7 +84,7 @@ class PDBAtom(Atom):
             A two-element tuple containing the RECORD (ATOM/HETATM) line and
             the CONECT line (if applicable).
         """
-        if not self.atom.startswith('H'):
+        if not self.atom.startswith('H') and len(self.atom) < 4:
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom
@@ -220,6 +220,27 @@ class PDBFile(AtomCollection):
             New PDBFile object.
         """
         url = "http://www.rcsb.org/pdb/files/{0}.pdb".format(pdb_code)
+        f = urlopen(url)
+        atoms = _read_file_iterator(f)
+        f.close()
+        return cls(atoms)
+
+    @classmethod
+    def fetch_ligand(cls, cci):
+        """Fetch ligand from Ligand Expo
+
+        Parameters
+        ----------
+        cci : string
+            Three-letter chemical component identifier
+
+        Returns
+        -------
+        PF : PDFFile
+            New PDBFile object
+        """
+        url = ('http://ligand-expo.rcsb.org/reports/'
+               '{0[0]}/{0}/{0}_model.pdb'.format(cci))
         f = urlopen(url)
         atoms = _read_file_iterator(f)
         f.close()
