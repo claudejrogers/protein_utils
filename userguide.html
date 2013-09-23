@@ -59,6 +59,7 @@
 <li><a class="reference internal" href="#select-binding-site-residues">Select binding site residues</a></li>
 <li><a class="reference internal" href="#structure-analysis-ramachandran-plot">Structure analysis: Ramachandran plot</a></li>
 <li><a class="reference internal" href="#orient-principle-axes-of-a-protein-along-cartesian-axes">Orient principle axes of a protein along Cartesian axes</a></li>
+<li><a class="reference internal" href="#search-for-similar-structures">Search for similar Structures</a></li>
 </ul>
 </li>
 </ul>
@@ -251,6 +252,39 @@ the origin and the principle axes of the protein align with the <em>x</em>, <em>
 <tt class="docutils literal"><span class="pre">rgb</span></tt> lines).</p>
 <blockquote>
 <div><img alt="_images/example4.png" src="_images/example4.png" />
+</div></blockquote>
+</div>
+<div class="section" id="search-for-similar-structures">
+<h2>Search for similar Structures<a class="headerlink" href="#search-for-similar-structures" title="Permalink to this headline">¶</a></h2>
+<p>Find similar proteins using PDB BLAST.</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">protutils.pdb</span> <span class="kn">import</span> <span class="n">PDBFile</span>
+<span class="kn">from</span> <span class="nn">protutils.ncbi.blastp</span> <span class="kn">import</span> <span class="n">BLASTPDBRecord</span>
+
+<span class="n">pdb</span> <span class="o">=</span> <span class="n">PDBFile</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&#39;4K5Y&#39;</span><span class="p">)</span>
+<span class="n">chain_a</span> <span class="o">=</span> <span class="n">pdb</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">chain</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">nres__lt</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="c"># Get sequence</span>
+<span class="n">sequence</span> <span class="o">=</span> <span class="n">chain_a</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c"># search for similar sequences to 4K5Y_A</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">BLASTPDBRecord</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+<span class="c"># Get top hit</span>
+<span class="n">PDB</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">get_best</span><span class="p">()[</span><span class="s">&#39;pdb&#39;</span><span class="p">]</span>
+<span class="n">similar</span> <span class="o">=</span> <span class="n">PDBFile</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">PDB</span><span class="p">)</span>
+<span class="n">similar</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">chain</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">nres__lt</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c"># Compare aligned structures</span>
+<span class="n">aligned</span> <span class="o">=</span> <span class="n">similar</span><span class="o">.</span><span class="n">cealign</span><span class="p">(</span><span class="n">chain_a</span><span class="p">)</span>
+
+<span class="n">chain_a</span><span class="o">.</span><span class="n">write_pdb</span><span class="p">(</span><span class="s">&#39;4k5y_A.mod.pdb&#39;</span><span class="p">)</span>
+<span class="n">aligned</span><span class="o">.</span><span class="n">write_pdb</span><span class="p">(</span><span class="s">&#39;{0}_A.mod.pdb&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">PDB</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Now, compare the structures:</p>
+<blockquote>
+<div><img alt="_images/example5.png" src="_images/example5.png" />
 </div></blockquote>
 </div>
 </div>

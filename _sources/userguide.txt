@@ -74,3 +74,15 @@ Visulaize the transformed structure in ``pymol`` (Cartesian axes indicated by
 ``rgb`` lines).
 
     .. image:: ../examples/example4.png
+
+
+Search for similar Structures
+-----------------------------
+
+Find similar proteins using PDB BLAST.
+
+    .. literalinclude:: ../examples/example5.py
+
+Now, compare the structures:
+
+    .. image:: ../examples/example5.png
