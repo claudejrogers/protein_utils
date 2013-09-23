@@ -22,9 +22,11 @@ Requires
 - matplotlib
 - scikit-learn
 
+To build, run:
+
     python setup.py build_ext --inplace
 
-To run without installing
+To run without installing:
 
     $ ipython
     In [1]: import sys
