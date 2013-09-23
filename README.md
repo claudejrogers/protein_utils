@@ -12,12 +12,15 @@ Some features include:
 - Alignment and RMSD calculations/transformations
 - RCSB, Ligand Expo, and BLAST lookups
 
+Additional documentation available
+[here](http://claudejrogers.github.io/protein_utils/)
+
 ## Build
 
 Requires
 - numpy
 - matplotlib
-- scikit-learn.
+- scikit-learn
 
     python setup.py build_ext --inplace
 

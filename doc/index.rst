@@ -31,6 +31,11 @@ To build::
 
     $ python setup.py build_ext --inplace
 
+To use the library, add the library to your python path::
+
+    import sys
+    sys.path.inset(0, '/path/to/protein_utils')
+
 Contents:
 =========
 
