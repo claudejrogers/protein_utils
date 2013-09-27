@@ -84,7 +84,7 @@ class BGFAtom(Atom):
             A two-element tuple containing the ATOM/HETATOM record, and the
             CONECT information.
         """
-        if self.record == 'ATOM' and not self.atom.startswith('H'):
+        if self.record == 'ATOM' and not self.atom.startswith('H') and len(self.atom) < 4:
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom
@@ -208,6 +208,8 @@ class BGFFile(AtomCollection):
         body = ["BIOGRF{0:>5s}\n".format(self.biogrf)]
         if self.descrp:
             body.append("DESCRP {0}\n".format(self.descrp))
+        else:
+            body.append("DESCRP {0}\n".format(filename))
         body.append("FORCEFIELD {0}\n".format(self.ff))
         body.append("FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5"
                     ",1x,a5,i3,i2,1x,f8.5,i2,i4,f10.5)\n")
@@ -255,6 +257,8 @@ class BGFFile(AtomCollection):
             charge = ''
             p = PDBAtom(record, natom, atom, altloc, res, chain, nres, icode,
                         x, y, z, occupancy, bfactor, element, charge)
+            if _atom.connections:
+                p.add_connections_from_list(_atom.connections)
             pdb_atoms.append(p)
         return PDBFile(pdb_atoms)
 

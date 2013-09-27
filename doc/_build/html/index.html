@@ -119,6 +119,11 @@
 <p>To build:</p>
 <div class="highlight-python"><pre>$ python setup.py build_ext --inplace</pre>
 </div>
+<p>To use the library, add the library to your python path:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">inset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;/path/to/protein_utils&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="contents">
 <h1>Contents:<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
@@ -130,7 +135,7 @@
 <li class="toctree-l2"><a class="reference internal" href="userguide.html#select-binding-site-residues">Select binding site residues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="userguide.html#structure-analysis-ramachandran-plot">Structure analysis: Ramachandran plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="userguide.html#orient-principle-axes-of-a-protein-along-cartesian-axes">Orient principle axes of a protein along Cartesian axes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="userguide.html#search-for-similar-structures">Search for similar Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide.html#search-for-similar-structures">Search for similar structures</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="srcdocs.html">Source documentation</a><ul>

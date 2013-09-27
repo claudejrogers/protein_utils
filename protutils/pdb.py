@@ -84,7 +84,7 @@ class PDBAtom(Atom):
             A two-element tuple containing the RECORD (ATOM/HETATM) line and
             the CONECT line (if applicable).
         """
-        if not self.atom.startswith('H') and len(self.atom) < 4:
+        if self.record == 'ATOM' and not self.atom.startswith('H') and len(self.atom) < 4:
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom

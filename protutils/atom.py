@@ -577,12 +577,12 @@ class AtomCollection(object):
             return self._init_with_atoms(atoms, deepcopy_=deep_copy)
         return None
 
-    def select(self, **kwargs):
+    def select(self, **selectors):
         """Select atoms based on logical criteria
 
         Parameters
         ----------
-        kwargs : various
+        selectors : various
             Keys are composed of an atom attribute:
 
             * chain
@@ -640,12 +640,12 @@ class AtomCollection(object):
         >>> selection = prot.select(nres__gt=200, nres__lt=245).sidechains()
 
         """
-        if 'deep_copy' in kwargs:
-            deep_copy = kwargs['deep_copy']
-            del kwargs['deep_copy']
+        if 'deep_copy' in selectors:
+            deep_copy = selectors['deep_copy']
+            del selectors['deep_copy']
         else:
             deep_copy = True
-        return self._select_or_exclude('select', deep_copy, **kwargs)
+        return self._select_or_exclude('select', deep_copy, **selectors)
 
     def exclude(self, **kwargs):
         """Create new AtomCollection where specified atoms are excluded
@@ -672,13 +672,35 @@ class AtomCollection(object):
             deep_copy = True
         return self._select_or_exclude('exclude', deep_copy, **kwargs)
 
+    def remove(self, **selectors):
+        """Remove atoms in selection
+
+        Parameters
+        ----------
+        selectors:
+            Refer to AtomCollection.select documentation
+
+        Returns
+        -------
+        result : AtomCollection
+            A new object with the atoms from the selection removed
+
+        See Also
+        --------
+        AtomCollection.select
+        """
+        new = self.select(**selectors)
+        result = self.__xor__(new)
+        result.renumber_atoms()
+        return result
+
     def _assign_values(self, attr, values):
         if not len(self.atoms) == len(values):
             raise ValueError('Values must be the same size as atom list')
         for obj, value in zip(self.atoms, values):
             setattr(obj, attr, value)
 
-    def assign(self, attr, value):
+    def assign(self, attr, value, **selectors):
         """Assign new value(s) to an Atom attribute
 
         Parameters
@@ -687,15 +709,23 @@ class AtomCollection(object):
 
         value : int, string, float, list, tuple
             The value or values to reassign to the selected attribute
+
+        selectors : kwargs
+            Selections. See AtomCollection.select documentation
         """
         if not hasattr(self.atoms[0], attr):
             raise AttributeError(
                 'Atom list entries do not have attribute: {0}'.format(attr)
             )
-        if isinstance(value, (tuple, list)):
-            self._assign_values(attr, value)
+        if selectors:
+            selectors['deep_copy'] = False
+            atms = self.select(**selectors)
         else:
-            for atm in self.atoms:
+            atms = self
+        if isinstance(value, (tuple, list)):
+            atms._assign_values(attr, value)
+        else:
+            for atm in atms.atoms:
                 setattr(atm, attr, value)
 
     def within(self, distance, other):

@@ -76,7 +76,7 @@ Visulaize the transformed structure in ``pymol`` (Cartesian axes indicated by
     .. image:: ../examples/example4.png
 
 
-Search for similar Structures
+Search for similar structures
 -----------------------------
 
 Find similar proteins using PDB BLAST.

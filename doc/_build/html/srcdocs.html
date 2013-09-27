@@ -150,7 +150,7 @@ to atoms in other molecules.</p>
 </table>
 <dl class="attribute">
 <dt id="protutils.atom.Atom.__dict__">
-<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x106b3d050&gt;</em><a class="headerlink" href="#protutils.atom.Atom.__dict__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x102da0360&gt;</em><a class="headerlink" href="#protutils.atom.Atom.__dict__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -455,7 +455,7 @@ collection.</p>
 
 <dl class="attribute">
 <dt id="protutils.atom.AtomCollection.__dict__">
-<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x106b4e6a8&gt;</em><a class="headerlink" href="#protutils.atom.AtomCollection.__dict__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x102db78a0&gt;</em><a class="headerlink" href="#protutils.atom.AtomCollection.__dict__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -666,7 +666,7 @@ after alignment.</p>
 
 <dl class="method">
 <dt id="protutils.atom.AtomCollection.assign">
-<tt class="descname">assign</tt><big>(</big><em>attr</em>, <em>value</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.assign" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">assign</tt><big>(</big><em>attr</em>, <em>value</em>, <em>**selectors</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.assign" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign new value(s) to an Atom attribute</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -674,8 +674,12 @@ after alignment.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>attr: Atom attribute</strong> :</p>
 <p><strong>value</strong> : int, string, float, list, tuple</p>
-<blockquote class="last">
+<blockquote>
 <div><p>The value or values to reassign to the selected attribute</p>
+</div></blockquote>
+<p><strong>selectors</strong> : kwargs</p>
+<blockquote class="last">
+<div><p>Selections. See AtomCollection.select documentation</p>
 </div></blockquote>
 </td>
 </tr>
@@ -887,6 +891,34 @@ principle axes aligned with the Cartesian axes.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="protutils.atom.AtomCollection.remove">
+<tt class="descname">remove</tt><big>(</big><em>**selectors</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove atoms in selection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>selectors:</strong> :</p>
+<blockquote>
+<div><p>Refer to AtomCollection.select documentation</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : AtomCollection</p>
+<blockquote class="last">
+<div><p>A new object with the atoms from the selection removed</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#protutils.atom.AtomCollection.select" title="protutils.atom.AtomCollection.select"><tt class="xref py py-obj docutils literal"><span class="pre">AtomCollection.select</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="protutils.atom.AtomCollection.remove_protons">
 <tt class="descname">remove_protons</tt><big>(</big><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.remove_protons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove protons from collection.</p>
@@ -973,13 +1005,13 @@ object.</p>
 
 <dl class="method">
 <dt id="protutils.atom.AtomCollection.select">
-<tt class="descname">select</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.select" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">select</tt><big>(</big><em>**selectors</em><big>)</big><a class="headerlink" href="#protutils.atom.AtomCollection.select" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select atoms based on logical criteria</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>kwargs</strong> : various</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>selectors</strong> : various</p>
 <blockquote>
 <div><p>Keys are composed of an atom attribute:</p>
 <ul class="simple">
@@ -1650,7 +1682,7 @@ data to file.</p>
 <p>Container for a residue</p>
 <dl class="attribute">
 <dt id="protutils.residue.Residue.__dict__">
-<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x107005590&gt;</em><a class="headerlink" href="#protutils.residue.Residue.__dict__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x103296398&gt;</em><a class="headerlink" href="#protutils.residue.Residue.__dict__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1700,7 +1732,7 @@ data to file.</p>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <dl class="attribute">
 <dt id="protutils.residue.Residues.__dict__">
-<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x106f786a8&gt;</em><a class="headerlink" href="#protutils.residue.Residues.__dict__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__dict__</tt><em class="property"> = &lt;dictproxy object at 0x103296638&gt;</em><a class="headerlink" href="#protutils.residue.Residues.__dict__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
