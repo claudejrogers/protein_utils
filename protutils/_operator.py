@@ -1,5 +1,9 @@
 from operator import contains, eq, ge, gt, le, lt, ne
-from numpy import isclose
+try:
+    from numpy import isclose
+except ImportError:
+    def isclose(a, b, rtol=1e-05, atol=1e-08):
+        return abs(a - b) <= (atol + rtol * abs(b))
 
 
 def isin(a, b):
