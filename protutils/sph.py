@@ -3,6 +3,10 @@ from glob import glob
 from itertools import product
 
 import numpy as np
+try:
+    from numpy import isclose
+except ImportError:
+    from ._operator import isclose
 from sklearn.cluster import KMeans
 
 
@@ -55,7 +59,7 @@ class Sphere(object):
         result : bool
             Evaluates to true if all the coordinates are close.
         """
-        return all(np.isclose(self.coord, other.coord))
+        return all(isclose(self.coord, other.coord))
 
     def __str__(self):
         return "Sphere({0:.5f}, {1:.5f}, {2:.5f})".format(

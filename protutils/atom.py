@@ -6,6 +6,10 @@ import operator
 from copy import deepcopy
 from itertools import groupby, product
 import numpy as np
+try:
+    from numpy import isclose
+except ImportError:
+    from ._operator import isclose
 
 import residue
 import _operator as protop
@@ -922,7 +926,7 @@ class AtomCollection(object):
 
         reflect = np.linalg.det(V) * np.linalg.det(Wt)
 
-        if np.isclose(reflect, -1.0):
+        if isclose(reflect, -1.0):
             S[-1] = -S[-1]
             V[:, -1] = -V[:, -1]
 
