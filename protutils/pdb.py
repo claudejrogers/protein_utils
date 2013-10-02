@@ -48,7 +48,10 @@ class PDBAtom(Atom):
         ELEM = slice(76, 78)
         CHARGE = slice(78, 80)
         record = line[RECORD].strip()
-        natom = int(line[NATOM])
+        try:
+            natom = int(line[NATOM])
+        except ValueError:
+            natom = int(line[NATOM], base=16)
         atom = line[ATOM].strip()
         altloc = line[ALTLOC].strip()
         res = line[RES].strip()
@@ -88,6 +91,7 @@ class PDBAtom(Atom):
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom
+        # TODO: fix for records where natom > 99999
         aline = (
             "{0:6s}{1:5d} {2:4s}{3:1s}{4:3s} {5:1s}{6:4d}{7:1s}   {8:8.3f}"
             "{9:8.3f}{10:8.3f}{11:6.2f}{12:6.2f}          {13:>2s}{14:>2s}\n"
