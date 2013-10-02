@@ -91,12 +91,15 @@ class PDBAtom(Atom):
             atom = ' {0}'.format(self.atom)
         else:
             atom = self.atom
-        # TODO: fix for records where natom > 99999
+        if self.natom > 99999:
+            natom = hex(self.natom)[2:]
+        else:
+            natom = "{0:5d}".format(self.natom)
         aline = (
-            "{0:6s}{1:5d} {2:4s}{3:1s}{4:3s} {5:1s}{6:4d}{7:1s}   {8:8.3f}"
+            "{0:6s}{1} {2:4s}{3:1s}{4:3s} {5:1s}{6:4d}{7:1s}   {8:8.3f}"
             "{9:8.3f}{10:8.3f}{11:6.2f}{12:6.2f}          {13:>2s}{14:>2s}\n"
         ).format(
-            self.record, self.natom, atom, self.altloc, self.res, self.chain,
+            self.record, natom, atom, self.altloc, self.res, self.chain,
             self.nres, self.icode, self.x, self.y, self.z, self.occupancy,
             self.bfactor, self.element, self.charge
         )
