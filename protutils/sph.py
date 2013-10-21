@@ -146,7 +146,7 @@ def sph2pdb(filename):
     -------
     Writes ``pdb`` to disk
     """
-    s = SphereFile(filename)
+    s = SphereFile.from_file(filename)
     s.write_pdb()
 
 
